@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { tools } from '../data/tools';
+import SEO from '../components/SEO';
 
 const Home = () => {
     return (
