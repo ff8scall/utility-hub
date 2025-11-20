@@ -2,7 +2,7 @@ import {
     Ruler, Weight, Calculator, Calendar, Type, Coins, Binary,
     Hash, Barcode, Edit, Zap, Palette, GitCompare, CheckSquare,
     FileCode, Globe, Lightbulb, QrCode, Sparkles, Key, Heart, Lock, Clock, Shield,
-    TrendingUp, Cake, Code, Timer, Brain, Image as ImageIcon, Youtube, FileText
+    TrendingUp, Cake, Code, Timer, Brain, Image as ImageIcon, Youtube, FileText, Scroll
 } from 'lucide-react';
 
 export const tools = [
@@ -54,4 +54,5 @@ export const tools = [
     // 재미 (분홍색 계열)
     { id: 'blood-type', title: '혈액형 성격', icon: Heart, path: '/blood-type', color: 'bg-pink-600' },
     { id: 'mbti-test', title: 'MBTI 테스트', icon: Brain, path: '/mbti-test', color: 'bg-pink-700' },
+    { id: 'saju', title: '무료 만세력', icon: Scroll, path: '/saju', color: 'bg-pink-800' },
 ];

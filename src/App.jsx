@@ -43,6 +43,7 @@ import ImageResizer from './pages/ImageResizer';
 import BaseConverter from './pages/BaseConverter';
 import YoutubeThumbnail from './pages/YoutubeThumbnail';
 import MarkdownEditor from './pages/MarkdownEditor';
+import Saju from './pages/Saju';
 
 function App() {
   return (
@@ -91,6 +92,7 @@ function App() {
               <Route path="/base-converter" element={<BaseConverter />} />
               <Route path="/youtube-thumbnail" element={<YoutubeThumbnail />} />
               <Route path="/markdown-editor" element={<MarkdownEditor />} />
+              <Route path="/saju" element={<Saju />} />
             </Routes>
           </Layout>
         </Router>
