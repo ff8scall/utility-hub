@@ -448,12 +448,121 @@ const MbtiTest = () => {
                 </div>
             </div>
 
-            <div className="bg-muted/30 rounded-xl p-6 text-sm text-muted-foreground">
-                <h3 className="font-bold text-foreground mb-2">💡 MBTI란?</h3>
-                <p>
-                    Myers-Briggs Type Indicator의 약자로, 16가지 성격 유형으로 사람들을 분류하는 성격 검사입니다.
-                    4가지 지표(외향/내향, 감각/직관, 사고/감정, 판단/인식)의 조합으로 성격을 파악합니다.
-                </p>
+            {/* Educational Content */}
+            <div className="space-y-6">
+                {/* MBTI란? */}
+                <div className="bg-muted/30 rounded-xl p-6">
+                    <h3 className="font-bold text-lg mb-4">🧠 MBTI란?</h3>
+                    <div className="space-y-3 text-sm text-muted-foreground">
+                        <p>
+                            <strong className="text-foreground">MBTI (Myers-Briggs Type Indicator)</strong>는
+                            칼 융의 심리 유형론을 바탕으로 개발된 성격 유형 검사입니다.
+                            사람의 성격을 4가지 척도로 나누어 총 16가지 유형으로 분류합니다.
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+                            <div className="bg-background border border-border rounded-lg p-3">
+                                <p className="font-bold text-primary mb-1">⚡ 에너지 방향</p>
+                                <div className="flex justify-between text-xs">
+                                    <span><strong className="text-foreground">E</strong> (외향)</span>
+                                    <span>vs</span>
+                                    <span><strong className="text-foreground">I</strong> (내향)</span>
+                                </div>
+                                <p className="text-xs mt-1">사교적 활동 vs 내면의 생각</p>
+                            </div>
+                            <div className="bg-background border border-border rounded-lg p-3">
+                                <p className="font-bold text-primary mb-1">👀 인식 기능</p>
+                                <div className="flex justify-between text-xs">
+                                    <span><strong className="text-foreground">S</strong> (감각)</span>
+                                    <span>vs</span>
+                                    <span><strong className="text-foreground">N</strong> (직관)</span>
+                                </div>
+                                <p className="text-xs mt-1">실제 경험 vs 미래 가능성</p>
+                            </div>
+                            <div className="bg-background border border-border rounded-lg p-3">
+                                <p className="font-bold text-primary mb-1">⚖️ 판단 기능</p>
+                                <div className="flex justify-between text-xs">
+                                    <span><strong className="text-foreground">T</strong> (사고)</span>
+                                    <span>vs</span>
+                                    <span><strong className="text-foreground">F</strong> (감정)</span>
+                                </div>
+                                <p className="text-xs mt-1">논리적 사실 vs 사람과의 관계</p>
+                            </div>
+                            <div className="bg-background border border-border rounded-lg p-3">
+                                <p className="font-bold text-primary mb-1">📅 생활 양식</p>
+                                <div className="flex justify-between text-xs">
+                                    <span><strong className="text-foreground">J</strong> (판단)</span>
+                                    <span>vs</span>
+                                    <span><strong className="text-foreground">P</strong> (인식)</span>
+                                </div>
+                                <p className="text-xs mt-1">계획과 체계 vs 자율과 융통성</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 테스트 방법 */}
+                <div className="bg-muted/30 rounded-xl p-6">
+                    <h3 className="font-bold text-lg mb-4">📝 테스트 방법</h3>
+                    <div className="space-y-3 text-sm text-muted-foreground">
+                        <div className="flex items-start gap-3">
+                            <span className="text-2xl">1️⃣</span>
+                            <div>
+                                <p className="font-semibold text-foreground">솔직하게 답변하세요</p>
+                                <p>이상적인 모습이 아닌, 현재의 편안한 자신의 모습을 선택하세요.</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <span className="text-2xl">2️⃣</span>
+                            <div>
+                                <p className="font-semibold text-foreground">너무 오래 고민하지 마세요</p>
+                                <p>질문을 읽고 가장 먼저 떠오르는 직관적인 답변이 정확할 확률이 높습니다.</p>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <span className="text-2xl">3️⃣</span>
+                            <div>
+                                <p className="font-semibold text-foreground">중립적인 답변은 없습니다</p>
+                                <p>두 가지 선택지 중 자신에게 조금이라도 더 가까운 쪽을 선택해야 합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 결과 해석 */}
+                <div className="bg-muted/30 rounded-xl p-6">
+                    <h3 className="font-bold text-lg mb-4">📊 결과 해석</h3>
+                    <div className="space-y-3 text-sm text-muted-foreground">
+                        <p>
+                            결과는 4가지 알파벳의 조합으로 나타납니다 (예: INTJ, ESFP).
+                            각 유형은 고유한 강점과 약점, 선호하는 직업, 대인관계 스타일을 가지고 있습니다.
+                        </p>
+                        <div className="bg-background border border-border rounded-lg p-4">
+                            <p className="font-semibold text-foreground mb-2">유형 그룹</p>
+                            <ul className="space-y-1 list-disc list-inside ml-2">
+                                <li><strong className="text-purple-600 dark:text-purple-400">분석가형</strong> (NT): 합리적이고 지적인 유형 (INTJ, INTP, ENTJ, ENTP)</li>
+                                <li><strong className="text-green-600 dark:text-green-400">외교관형</strong> (NF): 공감하고 협력하는 유형 (INFJ, INFP, ENFJ, ENFP)</li>
+                                <li><strong className="text-blue-600 dark:text-blue-400">관리자형</strong> (SJ): 현실적이고 헌신적인 유형 (ISTJ, ISFJ, ESTJ, ESFJ)</li>
+                                <li><strong className="text-yellow-600 dark:text-yellow-400">탐험가형</strong> (SP): 대담하고 실용적인 유형 (ISTP, ISFP, ESTP, ESFP)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 주의사항 */}
+                <div className="bg-yellow-500/10 border border-yellow-500/50 rounded-xl p-6">
+                    <h3 className="font-bold text-lg mb-4 text-yellow-600 dark:text-yellow-400">⚠️ 참고사항</h3>
+                    <div className="space-y-3 text-sm text-muted-foreground">
+                        <p>
+                            이 테스트는 정식 MBTI 검사의 약식 버전입니다.
+                            자신의 성향을 파악하는 가벼운 참고용으로만 활용해주세요.
+                            더 정확하고 상세한 분석을 원하신다면 전문가를 통한 정식 검사를 권장합니다.
+                        </p>
+                        <p>
+                            또한, 성격 유형은 좋고 나쁨이 없으며, 환경이나 노력에 따라 변화할 수 있습니다.
+                            결과에 너무 얽매이지 말고 자신의 강점을 발전시키는 도구로 활용하세요.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     );
