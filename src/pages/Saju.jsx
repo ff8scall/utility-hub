@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Solar, Lunar } from 'lunar-javascript';
-import { Scroll, Calendar, Info, RefreshCw, User, TrendingUp, Sparkles, Heart, Share2 } from 'lucide-react';
+import { Scroll, Calendar, Info, RefreshCw, User, TrendingUp, Sparkles, Heart } from 'lucide-react';
 import SEO from '../components/SEO';
+import ShareButtons from '../components/ShareButtons';
 import { sipsinAnalysis, deepAnalysis, analysisData, shinsalData } from '../data/SajuData.js';
 import SajuBasic from './saju_components/SajuBasic';
 import SajuFlow from './saju_components/SajuFlow';
@@ -541,15 +542,12 @@ const Saju = () => {
                         {activeTab === 'calendar' && <SajuCalendar result={result} getWuXing={getWuXing} getHangul={getHangul} getSipsin={getSipsin} />}
                     </div>
 
-                    {/* Share Button */}
-                    <div className="mt-6">
-                        <button
-                            onClick={handleShare}
-                            className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-lg"
-                        >
-                            <Share2 className="w-5 h-5" />
-                            결과 공유하기
-                        </button>
+                    {/* Share Buttons */}
+                    <div className="mt-6 bg-card border border-border rounded-xl p-6">
+                        <ShareButtons
+                            title="나의 사주팔자 분석 결과"
+                            description={`${result.solarDate} 출생 | 일간: ${result.dayMaster} (${result.dayMasterWuXing}) | 신살: ${result.shinsals.length > 0 ? result.shinsals.map(s => shinsalData[s].name).join(', ') : '없음'}`}
+                        />
                     </div>
                 </div>
             )}

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Brain, ArrowRight, RotateCcw, Check, Star, Briefcase, Heart } from 'lucide-react';
 import SEO from '../components/SEO';
+import ShareButtons from '../components/ShareButtons';
 
 const MbtiTest = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -507,6 +508,14 @@ const MbtiTest = () => {
                             <p className="text-sm text-muted-foreground">{result.famous}</p>
                         </div>
                     </div>
+                </div>
+
+                {/* Share Buttons */}
+                <div className="bg-card border border-border rounded-xl p-6">
+                    <ShareButtons
+                        title={`나의 MBTI는 ${result.type} (${result.title})입니다!`}
+                        description={`${result.subtitle} - ${result.story.substring(0, 100)}...`}
+                    />
                 </div>
 
                 <button

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { RefreshCw, Sparkles } from 'lucide-react';
 import SEO from '../components/SEO';
+import ShareButtons from '../components/ShareButtons';
 import RelatedTools from '../components/RelatedTools';
 
 const LottoGenerator = () => {
@@ -71,6 +72,14 @@ const LottoGenerator = () => {
                                 {num}
                             </div>
                         ))}
+                    </div>
+
+                    {/* Share Buttons */}
+                    <div className="mt-4">
+                        <ShareButtons
+                            title="행운의 로또 번호 생성!"
+                            description={`생성된 번호: ${numbers.join(', ')}`}
+                        />
                     </div>
                 </div>
             )}
