@@ -72,6 +72,16 @@ import Roulette from './pages/Roulette';
 import LadderGame from './pages/LadderGame';
 import CronGenerator from './pages/CronGenerator';
 import CsvJsonConverter from './pages/CsvJsonConverter';
+import DiscountCalculator from './pages/DiscountCalculator';
+import ColorExtractor from './pages/ColorExtractor';
+import AreaConverter from './pages/AreaConverter';
+import VolumeConverter from './pages/VolumeConverter';
+import SpeedConverter from './pages/SpeedConverter';
+import WorldClock from './pages/WorldClock';
+import PercentCalculator from './pages/PercentCalculator';
+import FractionCalculator from './pages/FractionCalculator';
+import EncryptionTool from './pages/EncryptionTool';
+import DiceRoller from './pages/DiceRoller';
 
 function App() {
   return (
@@ -95,6 +105,7 @@ function App() {
               <Route path="/ip-address" element={<IpAddress />} />
               <Route path="/flashlight" element={<Flashlight />} />
               <Route path="/qr-gen" element={<QrGenerator />} />
+              <Route path="/qr-generator" element={<QrGenerator />} />
               <Route path="/barcode-gen" element={<BarcodeGenerator />} />
               <Route path="/string-converter" element={<StringConverter />} />
               <Route path="/html-view" element={<HtmlFormatter />} />
@@ -148,6 +159,16 @@ function App() {
               <Route path="/ladder-game" element={<LadderGame />} />
               <Route path="/cron-generator" element={<CronGenerator />} />
               <Route path="/csv-json" element={<CsvJsonConverter />} />
+              <Route path="/discount-calculator" element={<DiscountCalculator />} />
+              <Route path="/color-extractor" element={<ColorExtractor />} />
+              <Route path="/area-converter" element={<AreaConverter />} />
+              <Route path="/volume-converter" element={<VolumeConverter />} />
+              <Route path="/speed-converter" element={<SpeedConverter />} />
+              <Route path="/world-clock" element={<WorldClock />} />
+              <Route path="/percent-calculator" element={<PercentCalculator />} />
+              <Route path="/fraction-calculator" element={<FractionCalculator />} />
+              <Route path="/encryption-tool" element={<EncryptionTool />} />
+              <Route path="/dice-roller" element={<DiceRoller />} />
             </Routes>
           </Layout>
         </Router>

@@ -1,272 +1,313 @@
-import { Coins, ArrowRightLeft, RefreshCw, Clock, Trash2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 import SEO from '../components/SEO';
-import useHistory from '../hooks/useHistory';
+import { DollarSign, RefreshCw, TrendingUp, Calendar, Edit2, Save, ArrowRightLeft } from 'lucide-react';
+import ShareButtons from '../components/ShareButtons';
 import RelatedTools from '../components/RelatedTools';
 
 const CurrencyConverter = () => {
-    const [rates, setRates] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [lastUpdated, setLastUpdated] = useState(null);
+    // Default rates (KRW base) - Updated: 2025-11-21
+    const DEFAULT_RATES = {
+        USD: 1340.50,
+        JPY: 9.12,
+        CNY: 185.20,
+        EUR: 1460.30,
+        GBP: 1695.80,
+        AUD: 870.40,
+        CAD: 960.30,
+        CHF: 1520.60,
+        HKD: 171.80,
+        SGD: 995.20,
+    };
 
-    const [amount, setAmount] = useState('1');
+    const CURRENCY_INFO = {
+        KRW: { name: '대한민국 원', symbol: '₩', flag: '🇰🇷' },
+        USD: { name: '미국 달러', symbol: '$', flag: '🇺🇸' },
+        JPY: { name: '일본 엔', symbol: '¥', flag: '🇯🇵' },
+        CNY: { name: '중국 위안', symbol: '¥', flag: '🇨🇳' },
+        EUR: { name: '유로', symbol: '€', flag: '🇪🇺' },
+        GBP: { name: '영국 파운드', symbol: '£', flag: '🇬🇧' },
+        AUD: { name: '호주 달러', symbol: 'A$', flag: '🇦🇺' },
+        CAD: { name: '캐나다 달러', symbol: 'C$', flag: '🇨🇦' },
+        CHF: { name: '스위스 프랑', symbol: 'CHF', flag: '🇨🇭' },
+        HKD: { name: '홍콩 달러', symbol: 'HK$', flag: '🇭🇰' },
+        SGD: { name: '싱가포르 달러', symbol: 'S$', flag: '🇸🇬' },
+    };
+
+    const [rates, setRates] = useState(() => {
+        const saved = localStorage.getItem('currency-rates');
+        return saved ? JSON.parse(saved) : DEFAULT_RATES;
+    });
+
+    const [lastUpdate, setLastUpdate] = useState(() => {
+        return localStorage.getItem('currency-last-update') || '2025-11-21';
+    });
+
     const [fromCurrency, setFromCurrency] = useState('USD');
     const [toCurrency, setToCurrency] = useState('KRW');
+    const [amount, setAmount] = useState('100');
     const [result, setResult] = useState('');
-
-    const { history, saveHistory, clearHistory } = useHistory('currency-converter-history');
-
-    // Currency names in Korean
-    const currencyNames = {
-        'KRW': '한국 원',
-        'USD': '미국 달러',
-        'EUR': '유로',
-        'JPY': '일본 엔',
-        'CNY': '중국 위안',
-        'GBP': '영국 파운드',
-        'AUD': '호주 달러',
-        'CAD': '캐나다 달러',
-        'CHF': '스위스 프랑',
-        'HKD': '홍콩 달러',
-        'SGD': '싱가포르 달러',
-        'THB': '태국 바트',
-        'VND': '베트남 동',
-        'INR': '인도 루피',
-        'RUB': '러시아 루블',
-        'BRL': '브라질 헤알',
-        'MXN': '멕시코 페소',
-        'ZAR': '남아공 랜드',
-        'TRY': '터키 리라',
-        'NZD': '뉴질랜드 달러'
-    };
-
-    const getCurrencyDisplay = (code) => {
-        return currencyNames[code] ? `${code} (${currencyNames[code]})` : code;
-    };
-
-    const formatNumber = (num) => {
-        return parseFloat(num).toLocaleString('ko-KR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
-    };
-
-    const fetchRates = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
-            if (!response.ok) throw new Error('환율 정보를 가져오는데 실패했습니다.');
-            const data = await response.json();
-            setRates(data.rates);
-            setLastUpdated(new Date(data.time_last_updated * 1000).toLocaleString('ko-KR'));
-            setLoading(false);
-        } catch (err) {
-            setError(err.message);
-            setLoading(false);
-        }
-    };
+    const [editMode, setEditMode] = useState(false);
+    const [editRates, setEditRates] = useState({});
 
     useEffect(() => {
-        fetchRates();
-    }, []);
+        calculateConversion();
+    }, [amount, fromCurrency, toCurrency, rates]);
 
-    useEffect(() => {
-        if (!rates[fromCurrency] || !rates[toCurrency] || amount === '' || isNaN(amount)) {
+    const calculateConversion = () => {
+        const amt = parseFloat(amount) || 0;
+        if (amt === 0) {
             setResult('');
             return;
         }
 
-        const rateFrom = rates[fromCurrency];
-        const rateTo = rates[toCurrency];
-        const converted = (parseFloat(amount) / rateFrom) * rateTo;
-        const formattedResult = converted.toFixed(2);
-        setResult(formattedResult);
+        let converted;
+        if (fromCurrency === 'KRW' && toCurrency === 'KRW') {
+            converted = amt;
+        } else if (fromCurrency === 'KRW') {
+            converted = amt / rates[toCurrency];
+        } else if (toCurrency === 'KRW') {
+            converted = amt * rates[fromCurrency];
+        } else {
+            const toKRW = amt * rates[fromCurrency];
+            converted = toKRW / rates[toCurrency];
+        }
 
-        // Auto-save to history after 2 seconds of inactivity
-        const timer = setTimeout(() => {
-            if (amount && formattedResult) {
-                saveHistory({
-                    from: `${formatNumber(amount)} ${fromCurrency}`,
-                    to: `${formatNumber(formattedResult)} ${toCurrency}`,
-                    date: new Date().toLocaleString(),
-                    rawAmount: amount,
-                    rawFrom: fromCurrency,
-                    rawTo: toCurrency
-                });
-            }
-        }, 2000);
+        setResult(converted.toFixed(2));
+    };
 
-        return () => clearTimeout(timer);
-    }, [amount, fromCurrency, toCurrency, rates]);
+    const formatNumber = (num) => {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
 
-    const handleSwap = () => {
+    const swapCurrencies = () => {
         setFromCurrency(toCurrency);
         setToCurrency(fromCurrency);
     };
 
-    const handleHistoryClick = (item) => {
-        if (item.rawAmount) {
-            setAmount(item.rawAmount);
-            setFromCurrency(item.rawFrom);
-            setToCurrency(item.rawTo);
+    const resetToDefault = () => {
+        if (confirm('기본 환율로 초기화하시겠습니까?')) {
+            setRates(DEFAULT_RATES);
+            setLastUpdate(new Date().toISOString().split('T')[0]);
+            localStorage.setItem('currency-rates', JSON.stringify(DEFAULT_RATES));
+            localStorage.setItem('currency-last-update', new Date().toISOString().split('T')[0]);
+            setEditMode(false);
         }
     };
 
-    const commonCurrencies = ['KRW', 'USD', 'EUR', 'JPY', 'CNY', 'GBP'];
-    const allCurrencies = Object.keys(rates).sort();
-    const sortedCurrencies = [
-        ...commonCurrencies.filter(c => allCurrencies.includes(c)),
-        ...allCurrencies.filter(c => !commonCurrencies.includes(c))
-    ];
+    const startEdit = () => {
+        setEditRates({ ...rates });
+        setEditMode(true);
+    };
+
+    const saveRates = () => {
+        setRates(editRates);
+        const today = new Date().toISOString().split('T')[0];
+        setLastUpdate(today);
+        localStorage.setItem('currency-rates', JSON.stringify(editRates));
+        localStorage.setItem('currency-last-update', today);
+        setEditMode(false);
+    };
+
+    const cancelEdit = () => {
+        setEditRates({});
+        setEditMode(false);
+    };
 
     return (
-        <div className="max-w-2xl mx-auto space-y-8">
+        <div className="max-w-4xl mx-auto space-y-8">
             <SEO
-                title="실시간 환율 변환기 | 유틸리티 허브"
-                description="실시간 환율 정보를 바탕으로 전 세계 통화 가치를 비교하고 변환하세요."
-                keywords="환율 변환, 환율 계산, 달러 환율, 엔화 환율, 유로 환율"
+                title="환율 계산기 - 주요 통화 환율 변환 | Utility Hub"
+                description="주요 통화 간 환율을 계산하세요. USD, JPY, CNY, EUR, GBP 등 다양한 통화를 지원합니다. 사용자 정의 환율 설정 가능."
+                keywords="환율, 환율계산기, 달러, 엔화, 위안화, 환전, 통화변환, 외환"
             />
 
-            <div className="text-center space-y-4">
-                <h1 className="text-3xl font-bold flex items-center justify-center gap-3">
-                    <Coins className="w-8 h-8 text-primary" />
-                    실시간 환율 변환기
+            <div className="text-center space-y-4 py-6">
+                <div className="inline-flex items-center justify-center p-3 bg-green-100 dark:bg-green-900/30 rounded-full mb-2">
+                    <DollarSign className="w-8 h-8 text-green-600 dark:text-green-400" />
+                </div>
+                <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-blue-600">
+                    환율 계산기
                 </h1>
                 <p className="text-muted-foreground">
-                    전 세계 통화의 실시간 환율을 확인하고 변환하세요.
+                    주요 통화 간 환율을 빠르게 계산하세요.
                 </p>
             </div>
 
-            <div className="bg-card border border-border rounded-xl p-8 space-y-8 relative">
-                {loading && (
-                    <div className="absolute inset-0 bg-card/80 backdrop-blur-sm flex items-center justify-center z-10 rounded-xl">
-                        <div className="flex flex-col items-center gap-4">
-                            <RefreshCw className="w-8 h-8 text-primary animate-spin" />
-                            <p>환율 정보를 불러오는 중...</p>
-                        </div>
+            {/* Disclaimer */}
+            <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl p-4 text-sm">
+                <div className="flex items-start gap-2">
+                    <TrendingUp className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                        <p className="font-medium text-yellow-800 dark:text-yellow-300">참고용 환율 정보</p>
+                        <p className="text-yellow-700 dark:text-yellow-400 mt-1">
+                            이 환율은 참고용이며 실제 환전 시 금융기관의 환율과 다를 수 있습니다.
+                            정확한 환율은 은행이나 환전소에 문의하세요.
+                        </p>
+                        <p className="text-xs text-yellow-600 dark:text-yellow-500 mt-2 flex items-center gap-2">
+                            <Calendar className="w-4 h-4" />
+                            마지막 업데이트: {lastUpdate}
+                        </p>
                     </div>
-                )}
-
-                {error && (
-                    <div className="text-center p-4 bg-red-500/10 border border-red-500/50 rounded-lg">
-                        <p className="text-red-500">{error}</p>
-                        <button onClick={fetchRates} className="mt-2 text-sm underline hover:brightness-110">
-                            다시 시도
-                        </button>
-                    </div>
-                )}
-
-                <div className="space-y-2">
-                    <label className="block text-sm font-medium">금액</label>
-                    <input
-                        type="number"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        placeholder="금액을 입력하세요"
-                        className="w-full px-4 py-4 text-2xl font-bold bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
                 </div>
+            </div>
 
-                <div className="grid grid-cols-[1fr,auto,1fr] gap-4 items-center">
-                    <div className="space-y-2">
-                        <label className="block text-sm font-medium">에서</label>
+            {/* Converter */}
+            <div className="card p-8 space-y-6">
+                {/* From Currency */}
+                <div>
+                    <label className="block text-sm font-medium mb-2">보낼 금액</label>
+                    <div className="flex gap-3">
+                        <input
+                            type="number"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            className="input flex-1 text-lg"
+                            placeholder="100"
+                            min="0"
+                            step="0.01"
+                        />
                         <select
                             value={fromCurrency}
                             onChange={(e) => setFromCurrency(e.target.value)}
-                            className="w-full px-4 py-3 bg-background border border-border rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
-                            disabled={loading}
+                            className="input w-40 text-lg font-medium"
                         >
-                            {sortedCurrencies.map((c) => (
-                                <option key={c} value={c}>{getCurrencyDisplay(c)}</option>
+                            {Object.keys(CURRENCY_INFO).map((code) => (
+                                <option key={code} value={code}>
+                                    {CURRENCY_INFO[code].flag} {code}
+                                </option>
                             ))}
                         </select>
                     </div>
+                    <p className="text-sm text-muted-foreground mt-2">
+                        {CURRENCY_INFO[fromCurrency].name} ({CURRENCY_INFO[fromCurrency].symbol})
+                    </p>
+                </div>
 
+                {/* Swap Button */}
+                <div className="flex justify-center">
                     <button
-                        onClick={handleSwap}
-                        className="p-3 rounded-full hover:bg-secondary text-primary transition-colors mt-6"
+                        onClick={swapCurrencies}
+                        className="p-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                         title="통화 바꾸기"
                     >
-                        <ArrowRightLeft className="w-5 h-5" />
+                        <ArrowRightLeft className="w-6 h-6" />
                     </button>
+                </div>
 
-                    <div className="space-y-2">
-                        <label className="block text-sm font-medium">로</label>
+                {/* To Currency */}
+                <div>
+                    <label className="block text-sm font-medium mb-2">받을 금액</label>
+                    <div className="flex gap-3">
+                        <input
+                            type="text"
+                            value={result ? formatNumber(result) : ''}
+                            readOnly
+                            className="input flex-1 text-lg font-bold bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400"
+                            placeholder="0.00"
+                        />
                         <select
                             value={toCurrency}
                             onChange={(e) => setToCurrency(e.target.value)}
-                            className="w-full px-4 py-3 bg-background border border-border rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
-                            disabled={loading}
+                            className="input w-40 text-lg font-medium"
                         >
-                            {sortedCurrencies.map((c) => (
-                                <option key={c} value={c}>{getCurrencyDisplay(c)}</option>
+                            {Object.keys(CURRENCY_INFO).map((code) => (
+                                <option key={code} value={code}>
+                                    {CURRENCY_INFO[code].flag} {code}
+                                </option>
                             ))}
                         </select>
                     </div>
+                    <p className="text-sm text-muted-foreground mt-2">
+                        {CURRENCY_INFO[toCurrency].name} ({CURRENCY_INFO[toCurrency].symbol})
+                    </p>
                 </div>
 
+                {/* Exchange Rate Info */}
                 {result && (
-                    <div className="text-center p-8 bg-gradient-to-br from-primary/10 to-purple-500/10 rounded-xl">
-                        <p className="text-sm text-muted-foreground mb-2">변환 결과</p>
-                        <p className="text-4xl font-bold text-primary">
-                            {formatNumber(result)} {toCurrency}
+                    <div className="p-4 bg-muted/30 rounded-lg text-center">
+                        <p className="text-sm text-muted-foreground">환율</p>
+                        <p className="text-lg font-bold">
+                            1 {fromCurrency} = {
+                                fromCurrency === 'KRW'
+                                    ? (1 / rates[toCurrency]).toFixed(4)
+                                    : toCurrency === 'KRW'
+                                        ? rates[fromCurrency].toFixed(2)
+                                        : (rates[fromCurrency] / rates[toCurrency]).toFixed(4)
+                            } {toCurrency}
                         </p>
                     </div>
                 )}
-
-                {lastUpdated && (
-                    <p className="text-xs text-center text-muted-foreground">
-                        기준 시간: {lastUpdated}
-                    </p>
-                )}
             </div>
 
-            {/* History Section */}
-            {history.length > 0 && (
-                <div className="card p-6 space-y-4">
-                    <div className="flex items-center justify-between">
-                        <h3 className="font-bold flex items-center gap-2">
-                            <Clock className="w-5 h-5 text-text-secondary" />
-                            최근 변환 기록
-                        </h3>
-                        <button
-                            onClick={clearHistory}
-                            className="text-xs text-red-500 hover:text-red-600 flex items-center gap-1"
-                        >
-                            <Trash2 className="w-3 h-3" />
-                            기록 삭제
-                        </button>
-                    </div>
-                    <div className="space-y-2">
-                        {history.map((item, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => handleHistoryClick(item)}
-                                className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-bg-card-hover transition-colors text-sm group"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <span className="font-medium">{item.from}</span>
-                                    <ArrowRightLeft className="w-3 h-3 text-text-tertiary" />
-                                    <span className="font-bold text-primary">{item.to}</span>
-                                </div>
-                                <span className="text-xs text-text-tertiary opacity-0 group-hover:opacity-100 transition-opacity">
-                                    {item.date}
-                                </span>
-                            </button>
-                        ))}
+            {/* Rate Management */}
+            <div className="card p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-lg">환율 관리</h3>
+                    <div className="flex gap-2">
+                        {!editMode ? (
+                            <>
+                                <button onClick={startEdit} className="btn btn-ghost text-sm flex items-center gap-2">
+                                    <Edit2 className="w-4 h-4" />
+                                    환율 수정
+                                </button>
+                                <button onClick={resetToDefault} className="btn btn-ghost text-sm flex items-center gap-2">
+                                    <RefreshCw className="w-4 h-4" />
+                                    초기화
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <button onClick={saveRates} className="btn btn-primary text-sm flex items-center gap-2">
+                                    <Save className="w-4 h-4" />
+                                    저장
+                                </button>
+                                <button onClick={cancelEdit} className="btn btn-ghost text-sm">
+                                    취소
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
-            )}
 
-            <div className="bg-muted/30 rounded-xl p-6 text-sm text-muted-foreground">
-                <h3 className="font-bold text-foreground mb-2">💡 안내</h3>
-                <ul className="space-y-1 list-disc list-inside">
-                    <li>실시간 환율 정보를 제공합니다.</li>
-                    <li>주요 통화는 목록 상단에 표시됩니다.</li>
-                    <li>환율은 USD를 기준으로 계산됩니다.</li>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {Object.keys(rates).map((code) => (
+                        <div key={code} className="p-3 bg-muted/30 rounded-lg">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="font-medium">{CURRENCY_INFO[code].flag} {code}</span>
+                                <span className="text-xs text-muted-foreground">→ KRW</span>
+                            </div>
+                            {editMode ? (
+                                <input
+                                    type="number"
+                                    value={editRates[code]}
+                                    onChange={(e) => setEditRates({ ...editRates, [code]: parseFloat(e.target.value) })}
+                                    className="input w-full text-sm"
+                                    step="0.01"
+                                />
+                            ) : (
+                                <p className="font-mono text-sm">{rates[code].toFixed(2)}</p>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Info */}
+            <div className="bg-muted/30 rounded-xl p-6 space-y-2 text-sm">
+                <h3 className="font-bold text-base">💡 사용 방법</h3>
+                <ul className="space-y-1 text-muted-foreground list-disc list-inside">
+                    <li>금액과 통화를 선택하면 자동으로 환율이 계산됩니다</li>
+                    <li>"환율 수정" 버튼으로 직접 환율을 입력할 수 있습니다</li>
+                    <li>수정한 환율은 브라우저에 저장되어 다음에도 사용됩니다</li>
+                    <li>"초기화" 버튼으로 기본 환율로 되돌릴 수 있습니다</li>
+                    <li>실제 환전 시에는 금융기관의 환율을 확인하세요</li>
                 </ul>
             </div>
+
+            <ShareButtons
+                title="환율 계산기"
+                description="주요 통화 간 환율을 빠르게 계산하세요!"
+            />
 
             <RelatedTools relatedIds={['length', 'weight', 'age-calc']} />
         </div>

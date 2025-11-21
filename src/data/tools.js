@@ -5,7 +5,7 @@ import {
     Heart, Brain, Scroll, Gift, PenTool, Timer, CheckSquare, Lightbulb,
     Binary, FileCode, Edit, GitCompare, Barcode, Youtube, ImageIcon,
     Ruler, Weight, FileDigit, Key, Thermometer, Link, Trophy, MousePointer2, Crosshair, Target, Bomb, Disc, GitCommit,
-    ArrowLeftRight, FileJson
+    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices
 } from 'lucide-react';
 
 export const toolCategories = {
@@ -694,5 +694,105 @@ export const tools = [
         icon: Sparkles,
         color: 'bg-yellow-500',
         keywords: ['로또', 'lotto', '번호', 'number', 'random']
+    },
+    {
+        id: 'discount-calculator',
+        title: '할인율 계산기',
+        description: '원가와 할인율로 최종 가격 계산',
+        path: '/discount-calculator',
+        category: 'finance',
+        icon: Calculator,
+        color: 'bg-red-500',
+        keywords: ['할인', '할인율', '세일', '가격계산', 'discount', 'sale']
+    },
+    {
+        id: 'color-extractor',
+        title: '색상 추출기',
+        description: '이미지에서 컬러 팔레트 추출',
+        path: '/color-extractor',
+        category: 'utility',
+        icon: Palette,
+        color: 'bg-pink-500',
+        keywords: ['색상', '팔레트', '이미지', 'color', 'palette', 'extractor']
+    },
+    {
+        id: 'area-converter',
+        title: '면적 변환기',
+        description: '제곱미터, 평, 에이커 등 면적 단위 변환',
+        path: '/area-converter',
+        category: 'unit',
+        icon: Ruler,
+        color: 'bg-blue-600',
+        keywords: ['면적', '평', '제곱미터', 'area', 'converter']
+    },
+    {
+        id: 'volume-converter',
+        title: '부피 변환기',
+        description: '리터, 갤런, 세제곱미터 등 부피 단위 변환',
+        path: '/volume-converter',
+        category: 'unit',
+        icon: Droplet,
+        color: 'bg-cyan-600',
+        keywords: ['부피', '리터', '갤런', 'volume', 'converter']
+    },
+    {
+        id: 'speed-converter',
+        title: '속도 변환기',
+        description: 'km/h, mph, m/s 등 속도 단위 변환',
+        path: '/speed-converter',
+        category: 'unit',
+        icon: Gauge,
+        color: 'bg-orange-600',
+        keywords: ['속도', 'kmh', 'mph', 'speed', 'converter']
+    },
+    {
+        id: 'world-clock',
+        title: '세계 시계',
+        description: '전 세계 주요 도시의 현재 시간',
+        path: '/world-clock',
+        category: 'utility',
+        icon: Globe,
+        color: 'bg-indigo-600',
+        keywords: ['세계시계', '시간', '시차', 'world', 'clock']
+    },
+    {
+        id: 'percent-calculator',
+        title: '퍼센트 계산기',
+        description: '백분율, 증감률, 비율 계산',
+        path: '/percent-calculator',
+        category: 'finance',
+        icon: Percent,
+        color: 'bg-green-600',
+        keywords: ['퍼센트', '백분율', '증감률', 'percent', 'calculator']
+    },
+    {
+        id: 'fraction-calculator',
+        title: '분수 계산기',
+        description: '분수 사칙연산 및 기약분수 변환',
+        path: '/fraction-calculator',
+        category: 'dev',
+        icon: Divide,
+        color: 'bg-violet-600',
+        keywords: ['분수', '기약분수', 'fraction', 'calculator']
+    },
+    {
+        id: 'encryption-tool',
+        title: '암호화/복호화',
+        description: 'AES 알고리즘 기반 텍스트 암호화',
+        path: '/encryption-tool',
+        category: 'dev',
+        icon: Lock,
+        color: 'bg-red-600',
+        keywords: ['암호화', '복호화', 'AES', 'encryption']
+    },
+    {
+        id: 'dice-roller',
+        title: '주사위 굴리기',
+        description: 'D4, D6, D8, D10, D12, D20, D100 주사위',
+        path: '/dice-roller',
+        category: 'games',
+        icon: Dices,
+        color: 'bg-purple-600',
+        keywords: ['주사위', 'dice', 'roller', 'd20', 'rpg']
     }
 ];
