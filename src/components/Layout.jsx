@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Menu, X, ChevronDown } from 'lucide-react';
+import { Home, Menu, X, ChevronDown, Search, Activity, Sparkles, Code, Calculator, Type, Image, Gamepad2 } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import SearchModal from './SearchModal';
 
 const Layout = ({ children }) => {
     const location = useLocation();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+    // Keyboard shortcut for search (Ctrl+K)
+    React.useEffect(() => {
+        const handleKeyDown = (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                setIsSearchOpen(true);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     const navCategories = [
         {
-            title: '생활/금융',
+            title: '건강',
             items: [
-                { path: '/loan', label: '대출금 계산기' },
-                { path: '/date', label: 'D-Day 계산기' },
-                { path: '/currency', label: '환율 변환기' },
-                { path: '/lotto', label: '로또 번호 생성기' },
-                { path: '/work-hours', label: '근무 시간 계산기' },
-                { path: '/salary-calc', label: '연봉 실수령액' },
-                { path: '/compound-interest', label: '복리 계산기' },
-                { path: '/age-calc', label: '만 나이 계산기' },
+                { path: '/bmi', label: 'BMI 계산기' },
+                { path: '/bmr', label: 'BMR 계산기' },
+            ]
+        },
+        {
+            title: '게임',
+            items: [
+                { path: '/reaction-test', label: '반응속도 테스트' },
+                { path: '/typing-test', label: '영타 속도 테스트' },
             ]
         },
         {
@@ -31,21 +46,6 @@ const Layout = ({ children }) => {
         {
             title: '텍스트/개발',
             items: [
-                { path: '/word-count', label: '글자수 계산기' },
-                { path: '/unicode', label: '유니코드 변환기' },
-                { path: '/special-char', label: '특수문자표' },
-                { path: '/ascii-table', label: '아스키 코드표' },
-                { path: '/string-converter', label: '문자열 변환' },
-                { path: '/html-view', label: 'HTML 포맷터' },
-                { path: '/diff', label: '코드 비교' },
-                { path: '/web-editor', label: '웹 에디터' },
-                { path: '/ascii-art', label: '아스키아트' },
-                { path: '/base64', label: 'Base64 인코딩' },
-                { path: '/json-formatter', label: 'JSON 포맷터' },
-                { path: '/hash-gen', label: '해시 생성기' },
-                { path: '/html-encoder', label: 'HTML 인코딩' },
-                { path: '/uuid-gen', label: 'UUID 생성기' },
-                { path: '/base-converter', label: '진법 변환기' },
                 { path: '/markdown-editor', label: '마크다운 에디터' },
             ]
         },
@@ -85,7 +85,8 @@ const Layout = ({ children }) => {
             </a>
 
             {/* Header */}
-            <header className="border-b border-border bg-card sticky top-0 z-50 shadow-sm">
+            <header className="border-b border-border/40 bg-background/80 backdrop-blur-md sticky top-0 z-50 shadow-sm supports-[backdrop-filter]:bg-background/60">
+
                 <div className="container-custom h-16 flex items-center justify-between">
                     {/* Logo */}
                     <Link to="/" className="text-xl font-bold flex items-center gap-2 hover:opacity-80 transition-opacity">
@@ -109,7 +110,7 @@ const Layout = ({ children }) => {
                                     <ChevronDown className="w-3 h-3" />
                                 </button>
                                 {/* Dropdown */}
-                                <div className="absolute top-full left-0 w-48 bg-card/95 backdrop-blur-md border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+                                <div className="absolute top-full left-0 w-48 bg-white dark:bg-gray-950 border border-border rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
                                     <div className="py-1">
                                         {category.items.map((item) => (
                                             <Link
@@ -128,6 +129,13 @@ const Layout = ({ children }) => {
 
                     {/* Right Side Actions */}
                     <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setIsSearchOpen(true)}
+                            className="p-2 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors"
+                            aria-label="검색"
+                        >
+                            <Search className="w-5 h-5" />
+                        </button>
                         <ThemeToggle />
 
                         {/* Mobile Menu Button */}
@@ -188,9 +196,11 @@ const Layout = ({ children }) => {
                         <Link to="/privacy" className="hover:text-foreground">개인정보처리방침</Link>
                         <Link to="/contact" className="hover:text-foreground">문의하기</Link>
                     </div>
-                    <p>© 2024 Utility Hub. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} Utility Hub. All rights reserved.</p>
                 </div>
             </footer>
+
+            <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
         </div>
     );
 };

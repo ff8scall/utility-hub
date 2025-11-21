@@ -2,11 +2,22 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { tools } from '../data/tools';
 import SEO from '../components/SEO';
-import { Sparkles, TrendingUp, Zap, Star, Wand2 } from 'lucide-react';
+import { Sparkles, TrendingUp, Zap, Star, Wand2, Moon, Clock } from 'lucide-react';
+import useUserPreferences from '../hooks/useUserPreferences';
+
 
 const Home = () => {
     // Featured tools configuration
     const featuredTools = [
+        {
+            id: 'horoscope',
+            title: '별자리 운세',
+            description: '오늘의 운세와 성격, 궁합 분석',
+            path: '/horoscope',
+            color: 'from-indigo-500 to-purple-500',
+            icon: Moon,
+            badges: ['NEW', '인기']
+        },
         {
             id: 'zodiac',
             title: '2025년 띠별 운세',
@@ -14,7 +25,7 @@ const Home = () => {
             path: '/zodiac-fortune',
             color: 'from-purple-500 to-indigo-500',
             icon: Star,
-            badges: ['NEW', '인기']
+            badges: ['NEW']
         },
         {
             id: 'tarot',
@@ -23,11 +34,12 @@ const Home = () => {
             path: '/tarot',
             color: 'from-pink-500 to-rose-500',
             icon: Wand2,
-            badges: ['NEW', '추천']
+            badges: ['추천']
         },
         {
             id: 'saju',
-            title: '사주팔자 2.0',
+            title: '사주팔자',
+
             description: '정통 명리학 기반 운세 분석',
             path: '/saju',
             color: 'from-blue-500 to-cyan-500',
@@ -35,6 +47,51 @@ const Home = () => {
             badges: ['BEST']
         }
     ];
+
+    // User preferences
+    const { favorites, recentTools, toggleFavorite, addRecentTool } = useUserPreferences();
+
+    // Get favorite and recent tools
+    const favoriteToolsList = tools.filter(tool => favorites.includes(tool.id));
+    const recentToolsList = recentTools
+        .map(id => tools.find(tool => tool.id === id))
+        .filter(Boolean);
+
+    // ToolCard component
+    const ToolCard = ({ tool, isFavorite, onToggleFavorite }) => {
+        const Icon = tool.icon;
+        return (
+            <Link
+                to={tool.path}
+                onClick={() => addRecentTool(tool.id)}
+                className="group relative bg-card border border-border rounded-xl p-4 hover:shadow-lg hover:border-primary/50 transition-all duration-300 hover:-translate-y-1"
+            >
+                <div className="absolute top-2 right-2">
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onToggleFavorite(tool.id);
+                        }}
+                        className="p-1 rounded-full hover:bg-accent transition-colors"
+                        aria-label={isFavorite ? "즐겨찾기 해제" : "즐겨찾기 추가"}
+                    >
+                        <Star
+                            className={`w-4 h-4 ${isFavorite ? 'fill-yellow-500 text-yellow-500' : 'text-muted-foreground'}`}
+                        />
+                    </button>
+                </div>
+                <div className={`w-12 h-12 rounded-lg ${tool.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                    <Icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-bold text-sm mb-1 group-hover:text-primary transition-colors">
+                    {tool.title}
+                </h3>
+                <p className="text-xs text-muted-foreground line-clamp-2">
+                    {tool.description}
+                </p>
+            </Link>
+        );
+    };
 
     return (
         <div className="space-y-8">
@@ -64,6 +121,46 @@ const Home = () => {
                 </p>
             </section>
 
+            {/* Favorites Section */}
+            {favoriteToolsList.length > 0 && (
+                <section className="space-y-4 animate-in fade-in slide-in-from-bottom-4">
+                    <h2 className="text-2xl font-bold flex items-center gap-2">
+                        <Star className="w-6 h-6 text-yellow-500 fill-yellow-500" />
+                        즐겨찾기
+                    </h2>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                        {favoriteToolsList.map(tool => (
+                            <ToolCard
+                                key={tool.id}
+                                tool={tool}
+                                isFavorite={true}
+                                onToggleFavorite={toggleFavorite}
+                            />
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {/* Recent Tools Section */}
+            {recentToolsList.length > 0 && (
+                <section className="space-y-4 animate-in fade-in slide-in-from-bottom-4 delay-100">
+                    <h2 className="text-2xl font-bold flex items-center gap-2">
+                        <Clock className="w-6 h-6 text-blue-500" />
+                        최근 사용
+                    </h2>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                        {recentToolsList.map(tool => (
+                            <ToolCard
+                                key={tool.id}
+                                tool={tool}
+                                isFavorite={favorites.includes(tool.id)}
+                                onToggleFavorite={toggleFavorite}
+                            />
+                        ))}
+                    </div>
+                </section>
+            )}
+
             {/* Featured Tools Section */}
             <section className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -72,7 +169,8 @@ const Home = () => {
                         주요 기능
                     </h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+
                     {featuredTools.map((tool) => {
                         const Icon = tool.icon;
                         return (
@@ -128,21 +226,14 @@ const Home = () => {
             <section className="space-y-4">
                 <h2 className="text-xl font-bold">모든 도구</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-                    {tools.map((tool) => {
-                        const Icon = tool.icon;
-                        return (
-                            <Link
-                                key={tool.id}
-                                to={tool.path}
-                                className={`${tool.color} aspect-square rounded-2xl p-6 flex flex-col items-center justify-center gap-3 text-white hover:scale-105 focus:scale-105 focus:outline-none focus:ring-4 focus:ring-primary/50 focus:ring-offset-2 transition-all shadow-lg hover:shadow-xl group`}
-                            >
-                                <Icon className="w-12 h-12 group-hover:scale-110 group-focus:scale-110 transition-transform" />
-                                <span className="text-sm font-bold text-center leading-tight">
-                                    {tool.title}
-                                </span>
-                            </Link>
-                        );
-                    })}
+                    {tools.map((tool) => (
+                        <ToolCard
+                            key={tool.id}
+                            tool={tool}
+                            isFavorite={favorites.includes(tool.id)}
+                            onToggleFavorite={toggleFavorite}
+                        />
+                    ))}
                 </div>
             </section>
 

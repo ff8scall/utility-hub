@@ -45,6 +45,17 @@ import YoutubeThumbnail from './pages/YoutubeThumbnail';
 import MarkdownEditor from './pages/MarkdownEditor';
 import Saju from './pages/Saju';
 import ZodiacFortune from './pages/ZodiacFortune';
+import Horoscope from './pages/Horoscope';
+import DreamInterpretation from './pages/DreamInterpretation';
+import Biorhythm from './pages/Biorhythm';
+import BirthGen from './pages/BirthGen';
+import NameAnalysis from './pages/NameAnalysis';
+import BMI from './pages/BMI';
+import BMR from './pages/BMR';
+import ReactionTest from './pages/ReactionTest';
+import TypingTest from './pages/TypingTest';
+
+
 import TarotCard from './pages/TarotCard';
 
 function App() {
@@ -89,13 +100,23 @@ function App() {
               <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
               <Route path="/html-encoder" element={<HtmlEncoder />} />
               <Route path="/timer" element={<TimerStopwatch />} />
-              <Route path="/mbti-test" element={<MbtiTest />} />
+              <Route path="/mbti" element={<MbtiTest />} />
               <Route path="/image-resize" element={<ImageResizer />} />
               <Route path="/base-converter" element={<BaseConverter />} />
               <Route path="/youtube-thumbnail" element={<YoutubeThumbnail />} />
               <Route path="/markdown-editor" element={<MarkdownEditor />} />
               <Route path="/saju" element={<Saju />} />
               <Route path="/zodiac-fortune" element={<ZodiacFortune />} />
+              <Route path="/horoscope" element={<Horoscope />} />
+              <Route path="/dream-interpretation" element={<DreamInterpretation />} />
+              <Route path="/name-analysis" element={<NameAnalysis />} />
+              <Route path="/biorhythm" element={<Biorhythm />} />
+              <Route path="/birth-gen" element={<BirthGen />} />
+              <Route path="/bmi" element={<BMI />} />
+              <Route path="/bmr" element={<BMR />} />
+              <Route path="/reaction-test" element={<ReactionTest />} />
+              <Route path="/typing-test" element={<TypingTest />} />
+
               <Route path="/tarot" element={<TarotCard />} />
             </Routes>
           </Layout>
