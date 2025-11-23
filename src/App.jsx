@@ -82,6 +82,7 @@ import PercentCalculator from './pages/PercentCalculator';
 import FractionCalculator from './pages/FractionCalculator';
 import EncryptionTool from './pages/EncryptionTool';
 import DiceRoller from './pages/DiceRoller';
+import LunchRecommender from './pages/LunchRecommender';
 
 function App() {
   return (
@@ -169,6 +170,7 @@ function App() {
               <Route path="/fraction-calculator" element={<FractionCalculator />} />
               <Route path="/encryption-tool" element={<EncryptionTool />} />
               <Route path="/dice-roller" element={<DiceRoller />} />
+              <Route path="/lunch-recommender" element={<LunchRecommender />} />
             </Routes>
           </Layout>
         </Router>

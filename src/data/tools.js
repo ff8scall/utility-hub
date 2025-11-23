@@ -5,7 +5,7 @@ import {
     Heart, Brain, Scroll, Gift, PenTool, Timer, CheckSquare, Lightbulb,
     Binary, FileCode, Edit, GitCompare, Barcode, Youtube, ImageIcon,
     Ruler, Weight, FileDigit, Key, Thermometer, Link, Trophy, MousePointer2, Crosshair, Target, Bomb, Disc, GitCommit,
-    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices
+    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices, Utensils
 } from 'lucide-react';
 
 export const toolCategories = {
@@ -187,6 +187,16 @@ export const tools = [
     },
 
     // Finance/Life
+    {
+        id: 'lunch-recommender',
+        title: '점심 메뉴 추천',
+        description: '오늘 뭐 먹지? 결정 장애를 위한 점심 메뉴 랜덤 추천기',
+        path: '/lunch-recommender',
+        category: 'finance', // Grouping with Life/Finance as it fits 'Life'
+        icon: Utensils,
+        color: 'bg-orange-500',
+        keywords: ['점심', '메뉴', '추천', 'lunch', 'food', 'random']
+    },
     {
         id: 'loan',
         title: '대출금 계산기',
