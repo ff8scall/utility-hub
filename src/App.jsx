@@ -177,6 +177,15 @@ function App() {
               <Route path="/severance-calc" element={<SeveranceCalculator />} />
               <Route path="/minimum-wage" element={<MinimumWageCalculator />} />
               <Route path="/min-wage-calc" element={<MinimumWageCalculator />} />
+              <Route path="*" element={
+                <div className="flex flex-col items-center justify-center min-h-[50vh] text-center px-4">
+                  <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">404</h1>
+                  <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">페이지를 찾을 수 없습니다.</p>
+                  <a href="/" className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    홈으로 돌아가기
+                  </a>
+                </div>
+              } />
             </Routes>
           </Layout>
         </Router>
