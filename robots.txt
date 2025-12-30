@@ -3,9 +3,9 @@ User-agent: *
 Allow: /
 
 # Sitemap locations (Two-track strategy for Google & Naver)
-Sitemap: https://ff8scall.github.io/index.xml
-Sitemap: https://ff8scall.github.io/sitemap.xml
-Sitemap: https://ff8scall.github.io/rss.xml
+Sitemap: https://ff8scall.github.io/utility-hub/index.xml
+Sitemap: https://ff8scall.github.io/utility-hub/sitemap.xml
+Sitemap: https://ff8scall.github.io/utility-hub/rss.xml
 
 # Allow all major search engine bots
 User-agent: Googlebot
