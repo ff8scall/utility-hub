@@ -72,6 +72,49 @@ ${urls.map(url => `  <url>
 
     fs.writeFileSync(sitemapPath, sitemapContent);
     console.log(`Sitemap generated at ${sitemapPath} with ${urls.length} URLs.`);
+
+    generateRSS(urls);
+}
+
+function generateRSS(urls) {
+    console.log('Generating RSS feed...');
+    const rssPath = path.join(distPath, 'rss.xml');
+
+    // Create RSS items
+    const items = urls.map(url => {
+        // Simple title extraction from URL for RSS example
+        let title = 'Home';
+        if (url.loc !== `${BASE_URL}/`) {
+            const pathParts = url.loc.replace(BASE_URL, '').split('/');
+            // Get the first meaningful part
+            const slug = pathParts.find(p => p && p.length > 0) || 'Tool';
+            // Convert kebab-case to Title Case
+            title = slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+        }
+
+        return `    <item>
+      <title>${title}</title>
+      <link>${url.loc}</link>
+      <guid>${url.loc}</guid>
+      <pubDate>${new Date().toUTCString()}</pubDate>
+    </item>`;
+    }).join('\n');
+
+    const rssContent = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tool Hive - 무료 온라인 도구 모음</title>
+    <link>${BASE_URL}/</link>
+    <description>66개 이상의 무료 온라인 도구 모음</description>
+    <language>ko-kr</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml" />
+${items}
+  </channel>
+</rss>`;
+
+    fs.writeFileSync(rssPath, rssContent);
+    console.log(`RSS feed generated at ${rssPath}`);
 }
 
 generateSitemap();
