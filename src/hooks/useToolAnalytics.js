@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const STORAGE_KEY = 'utility-hub-tool-analytics';
+const STORAGE_KEY = 'tool-hive-tool-analytics';
 
 /**
  * Hook for tracking tool usage analytics

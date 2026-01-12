@@ -2,21 +2,21 @@ import { useState, useEffect } from 'react';
 
 const useUserPreferences = () => {
     const [favorites, setFavorites] = useState(() => {
-        const saved = localStorage.getItem('utility-hub-favorites');
+        const saved = localStorage.getItem('tool-hive-favorites');
         return saved ? JSON.parse(saved) : [];
     });
 
     const [recentTools, setRecentTools] = useState(() => {
-        const saved = localStorage.getItem('utility-hub-recents');
+        const saved = localStorage.getItem('tool-hive-recents');
         return saved ? JSON.parse(saved) : [];
     });
 
     useEffect(() => {
-        localStorage.setItem('utility-hub-favorites', JSON.stringify(favorites));
+        localStorage.setItem('tool-hive-favorites', JSON.stringify(favorites));
     }, [favorites]);
 
     useEffect(() => {
-        localStorage.setItem('utility-hub-recents', JSON.stringify(recentTools));
+        localStorage.setItem('tool-hive-recents', JSON.stringify(recentTools));
     }, [recentTools]);
 
     const toggleFavorite = (toolId) => {
