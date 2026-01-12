@@ -27,21 +27,24 @@ const getRoutes = () => {
 export default defineConfig({
   plugins: [
     react(),
-    vitePrerender({
-      staticDir: path.join(__dirname, 'dist'),
-      routes: getRoutes(),
-      renderer: new vitePrerender.PuppeteerRenderer({
-        maxConcurrentRoutes: 1,
-        renderAfterTime: 2000,
-        // Critical for CI/GitHub Actions
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    // Disable prerender on Vercel to avoid Puppeteer issues
+    ...(process.env.VERCEL ? [] : [
+      vitePrerender({
+        staticDir: path.join(__dirname, 'dist'),
+        routes: getRoutes(),
+        renderer: new vitePrerender.PuppeteerRenderer({
+          maxConcurrentRoutes: 1,
+          renderAfterTime: 2000,
+          // Critical for CI/GitHub Actions
+          args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        }),
+        postProcess(renderedRoute) {
+          // Ensure index.html is generated for every route (directory structure)
+          renderedRoute.outputPath = path.join(__dirname, 'dist', renderedRoute.route, 'index.html');
+          return renderedRoute;
+        },
       }),
-      postProcess(renderedRoute) {
-        // Ensure index.html is generated for every route (directory structure)
-        renderedRoute.outputPath = path.join(__dirname, 'dist', renderedRoute.route, 'index.html');
-        return renderedRoute;
-      },
-    }),
+    ]),
   ],
   base: '/',
 })
