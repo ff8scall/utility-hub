@@ -83,16 +83,27 @@ const SuikaGame = () => {
                 height,
                 wireframes: false,
                 background: '#f8fafc', // Light slate
-                pixelRatio: window.devicePixelRatio
+                // pixelRatio caused zooming issues on high-DPI screens, removing for 1:1 mapping safety
+                // pixelRatio: window.devicePixelRatio 
             }
         });
         renderRef.current = render;
 
         // Create Walls
-        const wallOptions = { isStatic: true, render: { fillStyle: '#94a3b8' } };
-        const ground = Bodies.rectangle(width / 2, height + 30, width, 60, wallOptions);
-        const leftWall = Bodies.rectangle(-30, height / 2, 60, height, wallOptions);
-        const rightWall = Bodies.rectangle(width + 30, height / 2, 60, height, wallOptions);
+        // Make walls thicker and ensure floor is clearly visible
+        const wallOptions = {
+            isStatic: true,
+            render: { fillStyle: '#94a3b8' },
+            restitution: 0.2, // Slightly less bouncy walls
+            friction: 0.1
+        };
+
+        // Ground: y = height. Height is 60. Top edge = height - 30.
+        // If canvas height is 650, floor surface is at 620.
+        const ground = Bodies.rectangle(width / 2, height, width, 60, wallOptions);
+
+        const leftWall = Bodies.rectangle(0, height / 2, 20, height, wallOptions);
+        const rightWall = Bodies.rectangle(width, height / 2, 20, height, wallOptions);
 
         // Top "Danger Line" Sensor
         const topSensor = Bodies.rectangle(width / 2, 100, width, 2, {
