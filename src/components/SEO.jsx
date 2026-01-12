@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom';
 
 const SEO = ({ title, description, keywords, image, schema }) => {
     const location = useLocation();
-    const siteTitle = '유틸리티 허브';
-    const siteUrl = 'https://ff8scall.github.io';
+    const siteTitle = 'Tool Hive';
+    const siteUrl = 'https://tool-hive.vercel.app';
     const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
     const defaultDescription = '편리한 웹 도구 모음: 사주팔자, MBTI, 로또, 길이 변환, 무게 변환, 대출 계산, 날짜 계산, 글자수 세기, 환율 변환 등 39가지 무료 도구.';
     const metaDescription = description || defaultDescription;
@@ -62,7 +62,7 @@ const SEO = ({ title, description, keywords, image, schema }) => {
             {/* Additional Meta Tags */}
             <meta name="robots" content="index, follow" />
             <meta name="language" content="Korean" />
-            <meta name="author" content="Utility Hub" />
+            <meta name="author" content="Tool Hive" />
 
             {/* Schema.org JSON-LD */}
             <script type="application/ld+json">

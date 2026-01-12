@@ -24,7 +24,7 @@ const Logo = ({ className = "" }) => {
             {/* Text */}
             <div className="flex flex-col justify-center">
                 <span className="font-bold text-lg leading-none tracking-tight text-foreground">
-                    Utility Hub
+                    Tool Hive
                 </span>
             </div>
         </div>

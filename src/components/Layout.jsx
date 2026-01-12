@@ -249,7 +249,7 @@ const Layout = ({ children }) => {
                         <Link to="/privacy" className="hover:text-foreground">개인정보처리방침</Link>
                         <Link to="/contact" className="hover:text-foreground">문의하기</Link>
                     </div>
-                    <p>© {new Date().getFullYear()} Utility Hub. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} Tool Hive. All rights reserved.</p>
                 </div>
             </footer>
 
