@@ -61,6 +61,7 @@ const Layout = ({ children }) => {
                 { path: '/aim-trainer', label: '에임 트레이너' },
                 { path: '/number-memory', label: '숫자 기억하기' },
                 { path: '/number-baseball', label: '숫자 야구' },
+                { path: '/suika-game', label: '수박 게임 (NEW)' },
                 { path: '/minesweeper', label: '지뢰찾기' },
                 { path: '/roulette', label: '돌림판 돌리기' },
                 { path: '/ladder-game', label: '사다리 타기' },

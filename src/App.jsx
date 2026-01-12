@@ -85,6 +85,7 @@ import DiceRoller from './pages/DiceRoller';
 import LunchRecommender from './pages/LunchRecommender';
 import SeveranceCalculator from './pages/SeveranceCalculator';
 import MinimumWageCalculator from './pages/MinimumWageCalculator';
+import SuikaGame from './pages/SuikaGame';
 
 function App() {
   return (
@@ -160,6 +161,7 @@ function App() {
               <Route path="/minesweeper" element={<Minesweeper />} />
               <Route path="/roulette" element={<Roulette />} />
               <Route path="/ladder-game" element={<LadderGame />} />
+              <Route path="/suika-game" element={<SuikaGame />} />
               <Route path="/cron-generator" element={<CronGenerator />} />
               <Route path="/csv-json" element={<CsvJsonConverter />} />
               <Route path="/discount-calculator" element={<DiscountCalculator />} />

@@ -186,6 +186,16 @@ export const tools = [
         keywords: ['roulette', 'random', 'choice', 'game']
     },
     {
+        id: 'suika-game',
+        title: '수박 게임',
+        description: '과일을 합쳐서 더 큰 과일 만들기 (머지 퍼즐)',
+        path: '/suika-game',
+        category: 'games',
+        icon: Gamepad2,
+        color: 'bg-green-500',
+        keywords: ['수박게임', 'suika', 'game', 'puzzle', 'merge', '과일']
+    },
+    {
         id: 'ladder-game',
         title: '사다리 타기',
         description: '내기할 때 좋은 사다리 게임',
