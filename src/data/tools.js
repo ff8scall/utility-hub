@@ -196,6 +196,16 @@ export const tools = [
         keywords: ['수박게임', 'suika', 'game', 'puzzle', 'merge', '과일']
     },
     {
+        id: '2048',
+        title: '2048',
+        description: '숫자를 합쳐 2048을 만드는 레전드 퍼즐',
+        path: '/2048',
+        category: 'games',
+        icon: Trophy,
+        color: 'bg-yellow-500',
+        keywords: ['2048', 'puzzle', 'game', 'number', '퍼즐']
+    },
+    {
         id: 'ladder-game',
         title: '사다리 타기',
         description: '내기할 때 좋은 사다리 게임',
