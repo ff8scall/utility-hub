@@ -50,12 +50,12 @@ const SuikaGame = () => {
 
         // Cleanup existing
         if (engineRef.current) {
-            Matter.Runner.stop(runnerRef.current);
-            Matter.World.clear(engineRef.current.world);
-            Matter.Engine.clear(engineRef.current);
+            if (runnerRef.current) Matter.Runner.stop(runnerRef.current);
             if (renderRef.current && renderRef.current.cancel) {
                 cancelAnimationFrame(renderRef.current.frameId);
             }
+            Matter.World.clear(engineRef.current.world);
+            Matter.Engine.clear(engineRef.current);
         }
 
         // Setup Matter.js Engine
@@ -76,14 +76,19 @@ const SuikaGame = () => {
         const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
-        // Make sure canvas scales correctly visually if needed, but for now 1:1 is best
         canvas.style.width = '100%';
         canvas.style.height = '100%';
+        canvas.style.touchAction = 'none';
 
-        sceneRef.current.innerHTML = ''; // Clear container
+        sceneRef.current.innerHTML = '';
         sceneRef.current.appendChild(canvas);
 
         const ctx = canvas.getContext('2d');
+
+        // Collision Categories
+        const defaultCategory = 0x0001,
+            sensorCategory = 0x0002, // Sensor
+            fruitCategory = 0x0004;
 
         // Create Walls
         const wallOptions = {
@@ -91,18 +96,23 @@ const SuikaGame = () => {
             label: 'wall',
             render: { fillStyle: '#94a3b8' },
             restitution: 0.2,
-            friction: 0.1
+            friction: 0.1,
+            collisionFilter: { mask: fruitCategory } // Walls collide with fruits
         };
 
-        const ground = Bodies.rectangle(width / 2, height, width, 60, wallOptions);
-        const leftWall = Bodies.rectangle(0, height / 2, 20, height, wallOptions);
-        const rightWall = Bodies.rectangle(width, height / 2, 20, height, wallOptions);
+        const ground = Bodies.rectangle(width / 2, height + 30, width + 200, 60, wallOptions);
+        const leftWall = Bodies.rectangle(-30, height / 2, 60, height * 2, wallOptions);
+        const rightWall = Bodies.rectangle(width + 30, height / 2, 60, height * 2, wallOptions);
 
         // Top "Danger Line" Sensor
-        const topSensor = Bodies.rectangle(width / 2, 100, width, 2, {
+        const topSensor = Bodies.rectangle(width / 2, 100, width, 5, {
             isStatic: true,
             isSensor: true,
-            label: 'topSensor'
+            label: 'topSensor',
+            collisionFilter: {
+                category: sensorCategory,
+                mask: 0 // Do not collide with anything
+            }
         });
 
         Composite.add(engine.world, [ground, leftWall, rightWall, topSensor]);
@@ -117,7 +127,8 @@ const SuikaGame = () => {
 
         // Helper to spawn a new dropper fruit
         const spawnDropper = () => {
-            if (isDropping) return;
+            // Safety reset
+            isDropping = false;
 
             const fruitInfo = FRUITS[nextFruitIndex];
             currentDropper = Bodies.circle(width / 2, 50, fruitInfo.radius, {
@@ -125,9 +136,15 @@ const SuikaGame = () => {
                 render: {
                     fillStyle: fruitInfo.color,
                 },
-                label: `fruit_${nextFruitIndex}`
+                label: `fruit_${nextFruitIndex}`,
+                collisionFilter: {
+                    category: fruitCategory,
+                    mask: defaultCategory | fruitCategory
+                },
+                sleepThreshold: -1 // Prevent sleeping
             });
             currentDropper.fruitIndex = nextFruitIndex;
+            currentDropper.createdAt = Date.now(); // Add timestamp for game over safety
             Composite.add(engine.world, currentDropper);
 
             // Prepare next fruit
@@ -145,30 +162,38 @@ const SuikaGame = () => {
             ctx.fillStyle = '#f8fafc';
             ctx.fillRect(0, 0, width, height);
 
-            // Draw Danger Line
+            // Draw Danger Line (Styled)
+            const dangerY = 100;
             ctx.beginPath();
-            ctx.moveTo(0, 100);
-            ctx.lineTo(width, 100);
-            ctx.strokeStyle = 'rgba(255, 0, 0, 0.5)';
-            ctx.lineWidth = 2;
+            ctx.moveTo(0, dangerY);
+            ctx.lineTo(width, dangerY);
+            ctx.setLineDash([10, 10]); // Dashed line
+            ctx.strokeStyle = '#FF6B6B'; // Soft red
+            ctx.lineWidth = 3;
             ctx.stroke();
+            ctx.setLineDash([]); // Reset dash
 
-            ctx.font = "14px Arial";
-            ctx.fillStyle = "red";
+            // Danger Label with background
+            const labelText = "⚠️ WARNING ⚠️";
+            ctx.font = "bold 14px Pretendard, sans-serif";
+            const textMetrics = ctx.measureText(labelText);
+
+            // Text Background
+            ctx.fillStyle = "rgba(255, 107, 107, 0.1)";
+            ctx.fillRect(0, dangerY - 25, width, 25);
+
+            ctx.fillStyle = "#FF6B6B";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.fillText("——— 위험 라인 (넘으면 게임 오버) ———", width / 2, 100);
+            ctx.fillText(labelText, width / 2, dangerY - 12);
 
             // Fetch all bodies
             const bodies = Composite.allBodies(engine.world);
 
             bodies.forEach(body => {
-                // Skip if no render bounds (meaning invalid body)
-                if (!body.render.visible && body.render.visible !== undefined) return;
+                if (body.render.visible === false) return;
 
                 ctx.beginPath();
-
-                // Draw Body Shape
                 const vertices = body.vertices;
                 ctx.moveTo(vertices[0].x, vertices[0].y);
                 for (let j = 1; j < vertices.length; j += 1) {
@@ -177,30 +202,31 @@ const SuikaGame = () => {
                 ctx.lineTo(vertices[0].x, vertices[0].y);
                 ctx.closePath();
 
-                // Fill & Stroke
-                // Use default if not specified
                 ctx.fillStyle = body.render.fillStyle || '#000000';
                 ctx.fill();
 
-                ctx.strokeStyle = '#333333';
+                ctx.strokeStyle = 'rgba(0,0,0,0.2)'; // Subtle border
                 ctx.lineWidth = 1;
                 ctx.stroke();
 
-                // Draw Emoji (if fruit)
                 if (body.label && body.label.startsWith('fruit_')) {
+                    // Safety: Remove bodies stuck at 0,0 (glitch)
+                    if (Math.abs(body.position.x) < 1 && Math.abs(body.position.y) < 1) {
+                        Composite.remove(engine.world, body);
+                        return;
+                    }
+
                     const index = parseInt(body.label.split('_')[1]);
                     const fruit = FRUITS[index];
                     if (fruit) {
-                        // Translation and Rotation for emojis
                         ctx.save();
                         ctx.translate(body.position.x, body.position.y);
-                        ctx.rotate(body.angle);
+                        ctx.rotate(body.angle || 0);
 
                         ctx.font = `${fruit.radius * 1.2}px Arial`;
                         ctx.fillStyle = '#000000';
                         ctx.textAlign = "center";
                         ctx.textBaseline = "middle";
-                        // Fine-tune offset for emoji vertical alignment
                         ctx.fillText(fruit.emoji, 0, fruit.radius * 0.15);
 
                         ctx.restore();
@@ -239,9 +265,14 @@ const SuikaGame = () => {
                         const newBody = Bodies.circle(newMidPoint.x, newMidPoint.y, nextFruit.radius, {
                             render: { fillStyle: nextFruit.color },
                             label: `fruit_${nextIndex}`,
-                            restitution: 0.2
+                            restitution: 0.2,
+                            collisionFilter: {
+                                category: fruitCategory,
+                                mask: defaultCategory | fruitCategory
+                            }
                         });
                         newBody.fruitIndex = nextIndex;
+                        newBody.createdAt = Date.now();
                         Composite.add(engine.world, newBody);
 
                         setScore(prev => prev + nextFruit.score);
@@ -257,21 +288,38 @@ const SuikaGame = () => {
             const fruits = bodies.filter(b => b.label && b.label.startsWith('fruit_') && !b.isStatic);
 
             for (const fruit of fruits) {
-                // If settled above the line
                 if (fruit.position.y < 100 && Math.abs(fruit.velocity.y) < 0.2) {
+                    // Ignore fruits that were just spawned (give 2 seconds grace period)
+                    if (fruit.createdAt && Date.now() - fruit.createdAt < 2000) continue;
+
                     if (!fruit.isStatic) {
                         setGameOver(true);
-                        cancelAnimationFrame(renderRef.current.frameId);
                         Matter.Runner.stop(runnerRef.current);
+                        cancelAnimationFrame(renderRef.current.frameId);
                     }
                 }
             }
         }, 1000);
 
         // Input Functions
-        const handleInputMove = (x) => {
+        const handleInputMove = (clientX) => {
+            const rect = canvas.getBoundingClientRect();
+            if (rect.width === 0) return; // Guard against hidden/unmounted canvas
+
+            const scaleX = width / rect.width;
+            const x = (clientX - rect.left) * scaleX;
+
             if (currentDropper && !isDropping) {
-                const clampedX = Math.max(30, Math.min(width - 30, x));
+                if (!Number.isFinite(x) || isNaN(x)) return;
+
+                // Dynamic Clamping based on Fruit Radius
+                const radius = currentDropper.circleRadius || 20;
+                const safePadding = 5;
+                const minX = radius + safePadding;
+                const maxX = width - radius - safePadding;
+
+                const clampedX = Math.max(minX, Math.min(maxX, x));
+
                 Matter.Body.setPosition(currentDropper, { x: clampedX, y: 50 });
             }
         };
@@ -279,38 +327,85 @@ const SuikaGame = () => {
         const handleInputEnd = () => {
             if (currentDropper && !isDropping) {
                 isDropping = true;
-                Matter.Body.setStatic(currentDropper, false);
+
+                // 1. Calculate drop position safely
+                let dropX = currentDropper.position.x;
+                const dropY = 50;
+
+                // Safety check: if 0,0 assume error and center it
+                if (Math.abs(dropX) < 1) dropX = width / 2;
+
+                // Safety clamping
+                const radius = currentDropper.circleRadius || 20;
+                const minX = radius + 5;
+                const maxX = width - radius - 5;
+                dropX = Math.max(minX, Math.min(maxX, dropX));
+
+                // 2. Remove the static preview/dropper
+                Composite.remove(engine.world, currentDropper);
+
+                // 3. Create a NEW dynamic body for the game
+                const nextIndex = currentDropper.fruitIndex;
+                const fruitInfo = FRUITS[nextIndex];
+
+                const fallingFruit = Bodies.circle(dropX, dropY, fruitInfo.radius, {
+                    isStatic: false,
+                    isSleeping: false,
+                    render: { fillStyle: fruitInfo.color },
+                    label: `fruit_${nextIndex}`,
+                    restitution: 0.2,
+                    friction: 0.1,
+                    density: 0.001,
+                    collisionFilter: {
+                        category: fruitCategory,
+                        mask: defaultCategory | fruitCategory
+                    }
+                });
+                fallingFruit.fruitIndex = nextIndex;
+                fallingFruit.createdAt = Date.now();
+
+                // 4. Add new body to world
+                Composite.add(engine.world, fallingFruit);
+
+                // Initial push
+                Matter.Body.setVelocity(fallingFruit, { x: 0, y: 5 });
+
+                console.log('Swapped and dropped fruit at:', dropX);
+
                 currentDropper = null;
                 setTimeout(() => {
-                    isDropping = false;
                     if (!gameOver) spawnDropper();
-                }, 1000);
+                }, 600);
             }
         };
 
-        // Listeners (attach to canvas)
-        const canvasContainer = sceneRef.current;
-        // Need to attach to document or container? Container is better but need to handle offset.
-        // Or attach to canvas directly.
-        // Previous logic used container. Let's use canvas directly for events to be precise.
+        // Listeners
+        const onMouseMove = (e) => handleInputMove(e.clientX);
+        const onMouseDown = (e) => handleInputMove(e.clientX); // Immediate update on click
+        const onMouseUp = () => handleInputEnd();
 
-        canvas.addEventListener('mousemove', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            handleInputMove(e.clientX - rect.left);
-        });
-        canvas.addEventListener('mouseup', () => handleInputEnd());
-
-        canvas.addEventListener('touchmove', (e) => {
-            e.preventDefault(); // prevent scroll
-            const rect = canvas.getBoundingClientRect();
-            handleInputMove(e.touches[0].clientX - rect.left);
-        }, { passive: false });
-        canvas.addEventListener('touchend', (e) => {
+        const onTouchMove = (e) => {
+            e.preventDefault();
+            if (e.touches[0]) handleInputMove(e.touches[0].clientX);
+        };
+        const onTouchStart = (e) => {
+            e.preventDefault();
+            if (e.touches[0]) handleInputMove(e.touches[0].clientX); // Immediate update on touch
+        };
+        const onTouchEnd = (e) => {
             e.preventDefault();
             handleInputEnd();
-        });
+        };
 
-        // Run Engine
+        window.addEventListener('mousemove', onMouseMove);
+        // Removed mousedown -> handleInputMove to prevent coordinate jumps. Mousemove is sufficient for positioning.
+        window.addEventListener('mouseup', onMouseUp);
+
+        canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+        canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+        canvas.addEventListener('touchend', onTouchEnd);
+
+        // Run Physics Engine
         const runner = Runner.create();
         runnerRef.current = runner;
         Runner.run(runner, engine);
@@ -318,27 +413,39 @@ const SuikaGame = () => {
         return () => {
             clearInterval(checkGameOverInterval);
             if (renderRef.current && renderRef.current.cancel) cancelAnimationFrame(renderRef.current.frameId);
+
+            window.removeEventListener('mousemove', onMouseMove);
+            // Removed mousedown cleanup
+            window.removeEventListener('mouseup', onMouseUp);
+            canvas.removeEventListener('touchmove', onTouchMove);
+            canvas.removeEventListener('touchstart', onTouchStart);
+            canvas.removeEventListener('touchend', onTouchEnd);
+
             Matter.Runner.stop(runner);
             Matter.World.clear(engine.world);
             Matter.Engine.clear(engine);
         };
     };
 
-    // Restart Game
     const restartGame = () => {
         setScore(0);
         setGameOver(false);
-        initGame();
+        // initGame(); // REMOVED: useEffect will trigger initGame when gameOver changes
     };
 
-    // Effect to start game on mount usually, but we need to handle restart cleanly
+
+
     useEffect(() => {
-        const cleanup = initGame();
+        initGame();
         return () => {
-            if (cleanup) cleanup();
-            // cleanup matter runner in initGame logic handles refs
-        }
-    }, [gameOver]); // Re-run init when game over state clears (restart)
+            if (runnerRef.current) Matter.Runner.stop(runnerRef.current);
+            if (renderRef.current && renderRef.current.cancel) cancelAnimationFrame(renderRef.current.frameId);
+            if (engineRef.current) {
+                Matter.World.clear(engineRef.current.world);
+                Matter.Engine.clear(engineRef.current);
+            }
+        };
+    }, [gameOver]);
 
     return (
         <div className="max-w-4xl mx-auto space-y-6">
@@ -348,10 +455,13 @@ const SuikaGame = () => {
                 keywords="수박게임, 머지퍼즐, 게임, 퍼즐, 과일합치기, 웹게임"
             />
 
+            <div className="flex justify-center mb-4">
+                {/* Debug buttons removed */}
+            </div>
+
             <div className="flex flex-col items-center">
                 <h2 className="text-3xl font-bold mb-6 text-center">🍉 수박 게임 (Merge Puzzle)</h2>
 
-                {/* Score Board */}
                 <div className="flex gap-8 mb-4">
                     <div className="bg-card border border-border rounded-xl px-6 py-3 text-center shadow-sm">
                         <div className="text-xs text-muted-foreground uppercase font-bold">현재 점수</div>
@@ -365,7 +475,6 @@ const SuikaGame = () => {
                     </div>
                 </div>
 
-                {/* Next Fruit Preview */}
                 <div className="flex items-center gap-2 mb-4 text-sm text-muted-foreground">
                     <span>다음 과일:</span>
                     <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-lg border border-border">
@@ -373,16 +482,13 @@ const SuikaGame = () => {
                     </div>
                 </div>
 
-                {/* Game Area */}
                 <div className="relative group">
-                    {/* Game Canvas Container */}
                     <div
                         ref={sceneRef}
                         className="border-4 border-slate-300 rounded-lg overflow-hidden bg-slate-50 cursor-pointer shadow-inner touch-none select-none"
-                        style={{ maxWidth: '100%', maxHeight: '80vh', minHeight: '650px' }} // Ensure min-height matches internal logic
+                        style={{ maxWidth: '100%', maxHeight: '80vh', minHeight: '650px' }}
                     ></div>
 
-                    {/* Game Over Overlay */}
                     {gameOver && (
                         <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-white rounded-lg animate-in fade-in">
                             <AlertTriangle className="w-16 h-16 text-red-500 mb-4 animate-bounce" />
@@ -398,7 +504,6 @@ const SuikaGame = () => {
                     )}
                 </div>
 
-                {/* Instructions */}
                 <div className="mt-8 max-w-lg text-center space-y-2 text-muted-foreground bg-muted/30 p-4 rounded-xl">
                     <h4 className="font-bold text-foreground">게임 방법</h4>
                     <p className="text-sm">👆 화면을 터치하거나 클릭하여 위치를 잡고 놓으세요.</p>
@@ -406,7 +511,6 @@ const SuikaGame = () => {
                     <p className="text-sm">⚠️ 과일이 상단 빨간 라인을 넘어가면 게임이 종료됩니다.</p>
                 </div>
 
-                {/* Legend */}
                 <div className="mt-4 flex flex-wrap justify-center gap-2 max-w-lg">
                     {FRUITS.map((fruit, idx) => (
                         <div key={idx} className="flex flex-col items-center">
