@@ -87,6 +87,8 @@ import SeveranceCalculator from './pages/SeveranceCalculator';
 import MinimumWageCalculator from './pages/MinimumWageCalculator';
 import SuikaGame from './pages/SuikaGame';
 import Game2048 from './pages/Game2048';
+import TanghuluGame from './pages/TanghuluGame';
+
 
 function App() {
   return (
@@ -164,6 +166,7 @@ function App() {
               <Route path="/ladder-game" element={<LadderGame />} />
               <Route path="/suika-game" element={<SuikaGame />} />
               <Route path="/2048" element={<Game2048 />} />
+              <Route path="/tanghulu-maker" element={<TanghuluGame />} />
               <Route path="/cron-generator" element={<CronGenerator />} />
               <Route path="/csv-json" element={<CsvJsonConverter />} />
               <Route path="/discount-calculator" element={<DiscountCalculator />} />

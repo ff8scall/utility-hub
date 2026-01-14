@@ -215,6 +215,16 @@ export const tools = [
         color: 'bg-green-600',
         keywords: ['ladder', 'random', 'game', 'bet']
     },
+    {
+        id: 'tanghulu-maker',
+        title: '탕후루 만들기',
+        description: '과일을 쌓아 나만의 탕후루 만들기',
+        path: '/tanghulu-maker',
+        category: 'games',
+        icon: Utensils,
+        color: 'bg-red-500',
+        keywords: ['tanghulu', 'game', 'stack', '탕후루', '게임']
+    },
 
     // Finance/Life
     {
