@@ -1,3 +1,4 @@
+
 import {
     Calculator, Type, FileText, Code, Image, Palette, Clock, Globe,
     Lock, Hash, QrCode, List, Calendar, Search, Moon, Star, Wand2, Sparkles,
@@ -5,7 +6,7 @@ import {
     Heart, Brain, Scroll, Gift, PenTool, Timer, CheckSquare, Lightbulb,
     Binary, FileCode, Edit, GitCompare, Barcode, Youtube, ImageIcon,
     Ruler, Weight, FileDigit, Key, Thermometer, Link, Trophy, MousePointer2, Crosshair, Target, Bomb, Disc, GitCommit,
-    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices, Utensils
+    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices, Utensils, Bird
 } from 'lucide-react';
 
 export const toolCategories = {
@@ -119,7 +120,7 @@ export const tools = [
         id: 'one-to-fifty',
         title: '1 to 50',
         description: '1부터 50까지 빠르게 터치하기',
-        path: '/one-to-fifty',
+        path: '/1to50',
         category: 'games',
         icon: Trophy,
         color: 'bg-yellow-500',
@@ -224,6 +225,26 @@ export const tools = [
         icon: Utensils,
         color: 'bg-red-500',
         keywords: ['tanghulu', 'game', 'stack', '탕후루', '게임']
+    },
+    {
+        id: 'missile-dodge',
+        title: '미사일 피하기',
+        description: '날아오는 미사일을 피해서 살아남으세요!',
+        path: '/missile-dodge',
+        category: 'games',
+        icon: Gamepad2,
+        color: 'bg-gray-700',
+        keywords: ['missile', 'dodge', 'game', 'avoid', '미사일', '피하기']
+    },
+    {
+        id: 'flappy-bird',
+        title: '파닥파닥 버드',
+        description: '장애물을 피해 최대한 멀리 날아가세요!',
+        path: '/flappy-bird',
+        category: 'games',
+        icon: Bird,
+        color: 'bg-sky-400',
+        keywords: ['flappy', 'bird', 'game', '파닥파닥', '플래피버드']
     },
 
     // Finance/Life
@@ -669,7 +690,7 @@ export const tools = [
         id: 'mbti-test',
         title: 'MBTI 테스트',
         description: '간단한 MBTI 성격 유형 검사',
-        path: '/mbti-test',
+        path: '/mbti',
         category: 'fun',
         icon: Brain,
         color: 'bg-pink-700',

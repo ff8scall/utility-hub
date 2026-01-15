@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import SEO from '../components/SEO';
-import { RefreshCw, Trophy } from 'lucide-react';
+import { RefreshCw, Trophy, Share2 } from 'lucide-react';
 import useUserPreferences from '../hooks/useUserPreferences';
+import useShareCanvas from '../hooks/useShareCanvas';
 
 const Game2048 = () => {
     const [grid, setGrid] = useState(Array(4).fill().map(() => Array(4).fill(0)));
@@ -10,6 +11,8 @@ const Game2048 = () => {
     const [gameOver, setGameOver] = useState(false);
     const [won, setWon] = useState(false);
     const { addRecentTool } = useUserPreferences();
+    const { shareCanvas } = useShareCanvas();
+    const containerRef = useRef(null);
 
     // Touch handling refs
     const touchStart = useRef({ x: 0, y: 0 });
@@ -231,7 +234,7 @@ const Game2048 = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto space-y-6 select-none touch-none" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+        <div className="max-w-md mx-auto space-y-6 select-none touch-none" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} ref={containerRef}>
             {/* Prevent default touch actions usually needed on body, but simple event handlers here work well */}
             <SEO
                 title="2048 게임 - Tool Hive"
@@ -262,6 +265,9 @@ const Game2048 = () => {
                             <p className="text-lg text-slate-600 dark:text-slate-300 mb-6">최종 점수: {score}</p>
                             <button onClick={initializeGame} className="bg-slate-800 text-white px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform">
                                 다시 도전하기
+                            </button>
+                            <button onClick={() => shareCanvas(containerRef.current, '2048', score)} className="bg-slate-600 text-white px-6 py-3 rounded-lg font-bold hover:scale-105 transition-transform mt-3 flex items-center gap-2">
+                                <Share2 size={18} /> 결과 공유하기
                             </button>
                         </div>
                     )}

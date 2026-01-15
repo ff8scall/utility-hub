@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SEO from '../components/SEO';
-import { Crosshair, Play, RefreshCw, Target, Clock, Settings, History, Trash2 } from 'lucide-react';
+import { Crosshair, Play, RefreshCw, Target, Clock, Settings, History, Trash2, Share2 } from 'lucide-react';
+import useShareCanvas from '../hooks/useShareCanvas';
 
 const AimTrainer = () => {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -15,6 +16,7 @@ const AimTrainer = () => {
     const [timeLeft, setTimeLeft] = useState(20);
     const [avgTime, setAvgTime] = useState(0);
     const [history, setHistory] = useState([]);
+    const { shareCanvas } = useShareCanvas();
 
     const containerRef = useRef(null);
     const lastClickTime = useRef(0);
@@ -195,7 +197,7 @@ const AimTrainer = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6 select-none">
+        <div className="max-w-4xl mx-auto space-y-6 select-none" ref={containerRef}>
             <SEO
                 title="에임 트레이너 - 마우스 정확도 연습"
                 description="움직이는 타겟을 빠르고 정확하게 클릭하여 에임 실력을 향상시키세요. FPS 게이머를 위한 필수 연습 도구입니다."
@@ -227,8 +229,8 @@ const AimTrainer = () => {
                                     key={sec}
                                     onClick={() => handleDurationChange(sec)}
                                     className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${duration === sec
-                                            ? 'bg-red-500 text-white shadow-md'
-                                            : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                        ? 'bg-red-500 text-white shadow-md'
+                                        : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
                                         }`}
                                 >
                                     {sec}초
@@ -253,8 +255,8 @@ const AimTrainer = () => {
                                     key={diff.id}
                                     onClick={() => handleDifficultyChange(diff.id)}
                                     className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${difficulty === diff.id
-                                            ? 'bg-blue-500 text-white shadow-md'
-                                            : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                        ? 'bg-blue-500 text-white shadow-md'
+                                        : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
                                         }`}
                                 >
                                     {diff.label}
@@ -268,8 +270,8 @@ const AimTrainer = () => {
                 <button
                     onClick={startCountdown}
                     className={`h-full px-8 py-4 rounded-lg text-lg font-bold text-white shadow-md transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 ${isPlaying
-                            ? 'bg-yellow-500 hover:bg-yellow-600'
-                            : 'bg-blue-600 hover:bg-blue-700'
+                        ? 'bg-yellow-500 hover:bg-yellow-600'
+                        : 'bg-blue-600 hover:bg-blue-700'
                         }`}
                 >
                     {isPlaying ? (
@@ -353,6 +355,12 @@ const AimTrainer = () => {
                                 <RefreshCw className="w-6 h-6" />
                                 다시 도전
                             </button>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); shareCanvas(containerRef.current, '에임 트레이너', score); }}
+                                className="px-8 py-3 bg-slate-600 hover:bg-slate-700 text-white rounded-xl font-bold text-lg transition-colors shadow-lg mt-3 flex items-center justify-center gap-2"
+                            >
+                                <Share2 size={24} /> 결과 공유하기
+                            </button>
                         </div>
                     )}
 
@@ -409,8 +417,8 @@ const AimTrainer = () => {
                                             <td className="px-4 py-3">{record.date}</td>
                                             <td className="px-4 py-3">
                                                 <span className={`px-2 py-1 rounded text-xs font-bold ${record.difficulty === 'easy' ? 'bg-green-100 text-green-800' :
-                                                        record.difficulty === 'hard' ? 'bg-red-100 text-red-800' :
-                                                            'bg-blue-100 text-blue-800'
+                                                    record.difficulty === 'hard' ? 'bg-red-100 text-red-800' :
+                                                        'bg-blue-100 text-blue-800'
                                                     }`}>
                                                     {getDifficultyLabel(record.difficulty)}
                                                 </span>

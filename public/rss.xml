@@ -469,5 +469,17 @@
       <guid>https://ff8scall.github.io/lunch-recommender/</guid>
       <pubDate>Sun, 23 Nov 2025 00:00:00 GMT</pubDate>
     </item>
+    <item>
+      <title>파닥파닥 버드 (Flappy Bird)</title>
+      <link>https://ff8scall.github.io/flappy-bird/</link>
+      <guid>https://ff8scall.github.io/flappy-bird/</guid>
+      <pubDate>Wed, 14 Jan 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>미사일 피하기 (Missile Dodge)</title>
+      <link>https://ff8scall.github.io/missile-dodge/</link>
+      <guid>https://ff8scall.github.io/missile-dodge/</guid>
+      <pubDate>Wed, 14 Jan 2026 00:00:00 GMT</pubDate>
+    </item>
   </channel>
 </rss>

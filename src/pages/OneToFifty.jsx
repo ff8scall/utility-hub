@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import SEO from '../components/SEO';
-import { Trophy, RefreshCw, Play, Timer, History, Trash2 } from 'lucide-react';
+import { Trophy, RefreshCw, Play, Timer, History, Trash2, Share2 } from 'lucide-react';
+import useShareCanvas from '../hooks/useShareCanvas';
 
 const OneToFifty = () => {
     const [numbers, setNumbers] = useState([]);
@@ -10,6 +11,8 @@ const OneToFifty = () => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [grid, setGrid] = useState([]);
     const [history, setHistory] = useState([]);
+    const { shareCanvas } = useShareCanvas();
+    const containerRef = useRef(null);
 
     // Load history from localStorage
     useEffect(() => {
@@ -104,7 +107,7 @@ const OneToFifty = () => {
     }, [isPlaying, startTime]);
 
     return (
-        <div className="max-w-2xl mx-auto space-y-6 select-none">
+        <div className="max-w-2xl mx-auto space-y-6 select-none" ref={containerRef}>
             <SEO
                 title="1 to 50 - 순발력 테스트 게임"
                 description="1부터 50까지 숫자를 순서대로 빠르게 클릭하세요! 당신의 순발력을 테스트해보세요."
@@ -126,8 +129,8 @@ const OneToFifty = () => {
                 <button
                     onClick={startGame}
                     className={`px-8 py-3 rounded-lg text-lg font-bold text-white shadow-md transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 ${isPlaying
-                            ? 'bg-yellow-500 hover:bg-yellow-600'
-                            : 'bg-blue-600 hover:bg-blue-700'
+                        ? 'bg-yellow-500 hover:bg-yellow-600'
+                        : 'bg-blue-600 hover:bg-blue-700'
                         }`}
                 >
                     {isPlaying ? (
@@ -180,6 +183,12 @@ const OneToFifty = () => {
                         >
                             <RefreshCw className="w-6 h-6" />
                             다시 도전
+                        </button>
+                        <button
+                            onClick={() => shareCanvas(containerRef.current, '1 to 50', `${formatTime(endTime - startTime)}s`)}
+                            className="px-8 py-3 bg-slate-600 hover:bg-slate-700 text-white rounded-xl font-bold text-lg transition-colors shadow-lg mt-3 flex items-center justify-center gap-2"
+                        >
+                            <Share2 size={24} /> 결과 공유하기
                         </button>
                     </div>
                 ) : (
@@ -239,9 +248,9 @@ const OneToFifty = () => {
                                         <tr key={record.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                             <td className="px-4 py-3">
                                                 <span className={`font-bold ${index === 0 ? 'text-yellow-500' :
-                                                        index === 1 ? 'text-gray-400' :
-                                                            index === 2 ? 'text-orange-600' :
-                                                                'text-gray-600 dark:text-gray-400'
+                                                    index === 1 ? 'text-gray-400' :
+                                                        index === 2 ? 'text-orange-600' :
+                                                            'text-gray-600 dark:text-gray-400'
                                                     }`}>
                                                     {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}위`}
                                                 </span>

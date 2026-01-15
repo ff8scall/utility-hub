@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Matter from 'matter-js';
 import SEO from '../components/SEO';
-import { RefreshCw, Trophy, AlertTriangle } from 'lucide-react';
+import { RefreshCw, Trophy, AlertTriangle, Share2 } from 'lucide-react';
 import useUserPreferences from '../hooks/useUserPreferences';
+import useShareCanvas from '../hooks/useShareCanvas';
 
 const SuikaGame = () => {
     const sceneRef = useRef(null);
+    const containerRef = useRef(null);
     const engineRef = useRef(null);
     const renderRef = useRef(null);
     const runnerRef = useRef(null);
@@ -14,6 +16,7 @@ const SuikaGame = () => {
     const [nextFruit, setNextFruit] = useState(null);
     const [highScore, setHighScore] = useState(0);
     const { addRecentTool } = useUserPreferences();
+    const { shareCanvas } = useShareCanvas();
 
     // Fruit definitions
     const FRUITS = [
@@ -482,7 +485,7 @@ const SuikaGame = () => {
                     </div>
                 </div>
 
-                <div className="relative group">
+                <div className="relative group" ref={containerRef}>
                     <div
                         ref={sceneRef}
                         className="border-4 border-slate-300 rounded-lg overflow-hidden bg-slate-50 cursor-pointer shadow-inner touch-none select-none"
@@ -499,6 +502,12 @@ const SuikaGame = () => {
                                 className="flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full font-bold text-lg hover:bg-primary/90 transition-transform active:scale-95 shadow-lg"
                             >
                                 <RefreshCw className="w-5 h-5" /> 다시 시작
+                            </button>
+                            <button
+                                onClick={() => shareCanvas(containerRef.current, '수박 게임', score)}
+                                className="flex items-center gap-2 px-8 py-4 bg-slate-700 text-white rounded-full font-bold text-lg hover:bg-slate-600 transition-transform active:scale-95 shadow-lg mt-3"
+                            >
+                                <Share2 className="w-5 h-5" /> 결과 공유하기
                             </button>
                         </div>
                     )}

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SEO from '../components/SEO';
-import { Bomb, Flag, RefreshCw, Trophy, AlertTriangle } from 'lucide-react';
+import { Bomb, Flag, RefreshCw, Trophy, AlertTriangle, Share2 } from 'lucide-react';
+import useShareCanvas from '../hooks/useShareCanvas';
+import { useRef } from 'react';
 
 const Minesweeper = () => {
     const [grid, setGrid] = useState([]);
@@ -9,6 +11,8 @@ const Minesweeper = () => {
     const [flagCount, setFlagCount] = useState(0);
     const [difficulty, setDifficulty] = useState('beginner'); // beginner, intermediate, expert
     const [timer, setTimer] = useState(0);
+    const { shareCanvas } = useShareCanvas();
+    const containerRef = useRef(null);
 
     // Configuration
     const configs = {
@@ -175,7 +179,7 @@ const Minesweeper = () => {
     };
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6 select-none">
+        <div className="max-w-4xl mx-auto space-y-6 select-none" ref={containerRef}>
             <SEO
                 title="지뢰찾기 - 고전 명작 퍼즐"
                 description="지뢰를 피해 모든 칸을 열어보세요! 논리적인 추리로 지뢰의 위치를 찾아내는 고전 명작 게임입니다."
@@ -199,8 +203,8 @@ const Minesweeper = () => {
                         key={diff}
                         onClick={() => setDifficulty(diff)}
                         className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${difficulty === diff
-                                ? 'bg-blue-500 text-white'
-                                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
                             }`}
                     >
                         {diff}
@@ -270,7 +274,13 @@ const Minesweeper = () => {
             {gameState === 'won' && (
                 <div className="text-center animate-bounce">
                     <div className="text-2xl font-bold text-green-500 mb-2">축하합니다! 성공하셨습니다! 🎉</div>
-                    <div className="text-gray-500">기록: {timer}초</div>
+                    <div className="text-gray-500 mb-4">기록: {timer}초</div>
+                    <button
+                        onClick={() => shareCanvas(containerRef.current, '지뢰찾기', `${timer}초`)}
+                        className="px-6 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold transition-colors shadow-md flex items-center justify-center gap-2 mx-auto"
+                    >
+                        <Share2 size={18} /> 결과 공유하기
+                    </button>
                 </div>
             )}
 

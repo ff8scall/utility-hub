@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { RotateCcw, Play, Utensils } from 'lucide-react';
+import { RotateCcw, Play, Utensils, Share2 } from 'lucide-react';
 import Matter from 'matter-js';
+import useShareCanvas from '../hooks/useShareCanvas';
 
 const CACHE_BUST = Date.now();
 const FRUITS = [
@@ -14,6 +15,7 @@ const FRUITS = [
 
 const TanghuluGame = () => {
     const sceneRef = useRef(null);
+    const containerRef = useRef(null);
     const engineRef = useRef(null);
     const renderRef = useRef(null);
     const runnerRef = useRef(null);
@@ -34,6 +36,7 @@ const TanghuluGame = () => {
     const [score, setScore] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [gameOver, setGameOver] = useState(false);
+    const { shareCanvas } = useShareCanvas();
 
     // Constants
     const WIDTH = 360;
@@ -418,7 +421,7 @@ const TanghuluGame = () => {
                     </div>
                 </div>
 
-                <div className="relative">
+                <div className="relative" ref={containerRef}>
                     <div
                         ref={sceneRef}
                         onClick={handleInput}
@@ -447,6 +450,12 @@ const TanghuluGame = () => {
                                     className="px-8 py-3 bg-red-500 rounded-full font-bold hover:bg-red-600 transition-transform hover:scale-105 shadow-xl"
                                 >
                                     다시 도전하기
+                                </button>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); shareCanvas(containerRef.current, '탕후루 만들기', score); }}
+                                    className="px-8 py-3 bg-gray-600 rounded-full font-bold hover:bg-gray-700 transition-transform hover:scale-105 shadow-xl mt-3 flex items-center justify-center gap-2"
+                                >
+                                    <Share2 className="w-5 h-5" /> 결과 공유하기
                                 </button>
                             </div>
                         )}

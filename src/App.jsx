@@ -88,6 +88,8 @@ import MinimumWageCalculator from './pages/MinimumWageCalculator';
 import SuikaGame from './pages/SuikaGame';
 import Game2048 from './pages/Game2048';
 import TanghuluGame from './pages/TanghuluGame';
+import FlappyBird from './pages/FlappyBird';
+import MissileDodge from './pages/MissileDodge';
 
 
 function App() {
@@ -102,7 +104,10 @@ function App() {
               <Route path="/weight" element={<WeightConverter />} />
               <Route path="/loan" element={<LoanCalculator />} />
               <Route path="/date" element={<DateCalculator />} />
+              <Route path="/date-calc" element={<DateCalculator />} />
+              <Route path="/dday-calc" element={<DateCalculator />} />
               <Route path="/word-count" element={<WordCounter />} />
+              <Route path="/word-counter" element={<WordCounter />} />
               <Route path="/currency" element={<CurrencyConverter />} />
               <Route path="/unicode" element={<UnicodeConverter />} />
               <Route path="/lotto" element={<LottoGenerator />} />
@@ -115,8 +120,14 @@ function App() {
               <Route path="/qr-generator" element={<QrGenerator />} />
               <Route path="/barcode-gen" element={<BarcodeGenerator />} />
               <Route path="/string-converter" element={<StringConverter />} />
+              <Route path="/case-converter" element={<StringConverter />} />
+              <Route path="/string-utils" element={<StringConverter />} />
               <Route path="/html-view" element={<HtmlFormatter />} />
+              <Route path="/html-formatter" element={<HtmlFormatter />} />
               <Route path="/diff" element={<CodeDiff />} />
+              <Route path="/code-diff" element={<CodeDiff />} />
+              <Route path="/code-compare" element={<CodeDiff />} />
+              <Route path="/compare" element={<CodeDiff />} />
               <Route path="/checklist" element={<Checklist />} />
               <Route path="/web-editor" element={<WebEditor />} />
               <Route path="/image-base64" element={<ImageToBase64 />} />
@@ -130,15 +141,20 @@ function App() {
               <Route path="/hash-gen" element={<HashGenerator />} />
               <Route path="/uuid-gen" element={<UuidGenerator />} />
               <Route path="/age-calc" element={<AgeCalculator />} />
+              <Route path="/age" element={<AgeCalculator />} />
+              <Route path="/age-calculator" element={<AgeCalculator />} />
               <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
               <Route path="/html-encoder" element={<HtmlEncoder />} />
               <Route path="/timer" element={<TimerStopwatch />} />
               <Route path="/mbti" element={<MbtiTest />} />
+              <Route path="/mbti-test" element={<MbtiTest />} />
               <Route path="/image-resize" element={<ImageResizer />} />
               <Route path="/base-converter" element={<BaseConverter />} />
               <Route path="/youtube-thumbnail" element={<YoutubeThumbnail />} />
               <Route path="/markdown-editor" element={<MarkdownEditor />} />
               <Route path="/saju" element={<Saju />} />
+              <Route path="/compatibility" element={<Saju />} />
+              <Route path="/gunghap" element={<Saju />} />
               <Route path="/zodiac-fortune" element={<ZodiacFortune />} />
               <Route path="/horoscope" element={<Horoscope />} />
               <Route path="/dream-interpretation" element={<DreamInterpretation />} />
@@ -152,11 +168,15 @@ function App() {
 
               <Route path="/tarot" element={<TarotCard />} />
               <Route path="/temperature-converter" element={<TemperatureConverter />} />
+              <Route path="/temperature" element={<TemperatureConverter />} />
+              <Route path="/temp-conv" element={<TemperatureConverter />} />
               <Route path="/url-encoder" element={<UrlEncoderDecoder />} />
               <Route path="/jwt-decoder" element={<JwtDecoder />} />
               <Route path="/regex-tester" element={<RegexTester />} />
               <Route path="/pomodoro-timer" element={<PomodoroTimer />} />
+              <Route path="/pomodoro" element={<PomodoroTimer />} />
               <Route path="/1to50" element={<OneToFifty />} />
+              <Route path="/one-to-fifty" element={<OneToFifty />} />
               <Route path="/cps-test" element={<CpsTest />} />
               <Route path="/aim-trainer" element={<AimTrainer />} />
               <Route path="/number-memory" element={<NumberMemory />} />
@@ -167,6 +187,8 @@ function App() {
               <Route path="/suika-game" element={<SuikaGame />} />
               <Route path="/2048" element={<Game2048 />} />
               <Route path="/tanghulu-maker" element={<TanghuluGame />} />
+              <Route path="/flappy-bird" element={<FlappyBird />} />
+              <Route path="/missile-dodge" element={<MissileDodge />} />
               <Route path="/cron-generator" element={<CronGenerator />} />
               <Route path="/csv-json" element={<CsvJsonConverter />} />
               <Route path="/discount-calculator" element={<DiscountCalculator />} />
