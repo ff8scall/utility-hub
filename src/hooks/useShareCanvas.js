@@ -26,15 +26,17 @@ const useShareCanvas = () => {
             const file = new File([blob], fileName, { type: 'image/png' });
 
             // 2. Try to use Web Share API
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    files: [file],
-                    title: title,
-                    text: `[유틸리티 허브] ${title}에서 ${score}점을 기록했습니다! 여러분도 도전해보세요!`,
-                    url: window.location.href
-                });
+            const shareText = `[유틸리티 허브] ${title}에서 ${score}점을 기록했습니다! 여러분도 도전해보세요!\n${window.location.href}`;
+            const shareData = {
+                files: [file],
+                title: title,
+                text: shareText,
+            };
+
+            if (navigator.canShare && navigator.canShare(shareData)) {
+                await navigator.share(shareData);
             } else {
-                // Fallback: Download
+                // Fallback: Download and copy link
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
@@ -44,7 +46,13 @@ const useShareCanvas = () => {
                 document.body.removeChild(link);
                 URL.revokeObjectURL(url);
 
-                alert('공유 기능이 지원되지 않는 브라우저입니다. 이미지가 기기에 저장되었습니다.');
+                // Also try to copy text to clipboard as a courtesy
+                try {
+                    await navigator.clipboard.writeText(shareText);
+                    alert('공유 기능이 지원되지 않는 브라우저입니다.\n이미지가 저장되었고, 공유 문구와 링크가 클립보드에 복사되었습니다.');
+                } catch (clipError) {
+                    alert('공유 기능이 지원되지 않는 브라우저입니다. 이미지가 기기에 저장되었습니다.');
+                }
             }
         } catch (error) {
             if (error.name !== 'AbortError') {

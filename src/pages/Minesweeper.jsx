@@ -212,77 +212,79 @@ const Minesweeper = () => {
                 ))}
             </div>
 
-            <div className="card p-6 inline-block min-w-full md:min-w-0 overflow-x-auto">
-                <div className="flex flex-col items-center gap-4">
-                    {/* Header */}
-                    <div className="flex justify-between items-center w-full bg-gray-200 dark:bg-gray-700 p-3 rounded-lg border-b-4 border-gray-300 dark:border-gray-600">
-                        <div className="font-mono text-2xl text-red-500 bg-black px-2 py-1 rounded">
-                            {String(mineCount - flagCount).padStart(3, '0')}
+            <div className="flex flex-col items-center gap-6" ref={containerRef}>
+                <div className="card p-6 inline-block min-w-full md:min-w-0 overflow-x-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700">
+                    <div className="flex flex-col items-center gap-4">
+                        {/* Header */}
+                        <div className="flex justify-between items-center w-full bg-gray-200 dark:bg-gray-700 p-3 rounded-lg border-b-4 border-gray-300 dark:border-gray-600">
+                            <div className="font-mono text-2xl text-red-500 bg-black px-2 py-1 rounded">
+                                {String(mineCount - flagCount).padStart(3, '0')}
+                            </div>
+
+                            <button
+                                onClick={initGame}
+                                className="btn btn-ghost p-2 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full"
+                            >
+                                {gameState === 'won' ? '😎' : gameState === 'lost' ? '😵' : '🙂'}
+                            </button>
+
+                            <div className="font-mono text-2xl text-red-500 bg-black px-2 py-1 rounded">
+                                {String(Math.min(999, timer)).padStart(3, '0')}
+                            </div>
                         </div>
 
-                        <button
-                            onClick={initGame}
-                            className="btn btn-ghost p-2 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-full"
+                        {/* Grid */}
+                        <div
+                            className="bg-gray-300 dark:bg-gray-600 p-1 rounded select-none"
+                            onContextMenu={(e) => e.preventDefault()}
                         >
-                            {gameState === 'won' ? '😎' : gameState === 'lost' ? '😵' : '🙂'}
-                        </button>
-
-                        <div className="font-mono text-2xl text-red-500 bg-black px-2 py-1 rounded">
-                            {String(Math.min(999, timer)).padStart(3, '0')}
-                        </div>
-                    </div>
-
-                    {/* Grid */}
-                    <div
-                        className="bg-gray-300 dark:bg-gray-600 p-1 rounded select-none"
-                        onContextMenu={(e) => e.preventDefault()}
-                    >
-                        {grid.map((row, r) => (
-                            <div key={r} className="flex">
-                                {row.map((cell, c) => (
-                                    <div
-                                        key={c}
-                                        onClick={() => revealCell(r, c)}
-                                        onContextMenu={(e) => toggleFlag(e, r, c)}
-                                        className={`
+                            {grid.map((row, r) => (
+                                <div key={r} className="flex">
+                                    {row.map((cell, c) => (
+                                        <div
+                                            key={c}
+                                            onClick={() => revealCell(r, c)}
+                                            onContextMenu={(e) => toggleFlag(e, r, c)}
+                                            className={`
                       w-8 h-8 md:w-9 md:h-9 flex items-center justify-center text-base md:text-lg font-bold cursor-pointer border
                       ${cell.isRevealed
-                                                ? 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
-                                                : 'bg-gray-200 dark:bg-gray-500 border-t-white border-l-white border-b-gray-400 border-r-gray-400 hover:bg-gray-100 dark:hover:bg-gray-400'
-                                            }
+                                                    ? 'bg-gray-100 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+                                                    : 'bg-gray-200 dark:bg-gray-500 border-t-white border-l-white border-b-gray-400 border-r-gray-400 hover:bg-gray-100 dark:hover:bg-gray-400'
+                                                }
                     `}
-                                    >
-                                        {cell.isRevealed ? (
-                                            cell.isMine ? (
-                                                <Bomb className="w-5 h-5 text-black dark:text-white fill-current" />
-                                            ) : (
-                                                <span className={getCellColor(cell.neighborMines)}>
-                                                    {cell.neighborMines > 0 ? cell.neighborMines : ''}
-                                                </span>
-                                            )
-                                        ) : cell.isFlagged ? (
-                                            <Flag className="w-5 h-5 text-red-500 fill-current" />
-                                        ) : null}
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
+                                        >
+                                            {cell.isRevealed ? (
+                                                cell.isMine ? (
+                                                    <Bomb className="w-5 h-5 text-black dark:text-white fill-current" />
+                                                ) : (
+                                                    <span className={getCellColor(cell.neighborMines)}>
+                                                        {cell.neighborMines > 0 ? cell.neighborMines : ''}
+                                                    </span>
+                                                )
+                                            ) : cell.isFlagged ? (
+                                                <Flag className="w-5 h-5 text-red-500 fill-current" />
+                                            ) : null}
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {gameState === 'won' && (
-                <div className="text-center animate-bounce">
-                    <div className="text-2xl font-bold text-green-500 mb-2">축하합니다! 성공하셨습니다! 🎉</div>
-                    <div className="text-gray-500 mb-4">기록: {timer}초</div>
-                    <button
-                        onClick={() => shareCanvas(containerRef.current, '지뢰찾기', `${timer}초`)}
-                        className="px-6 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold transition-colors shadow-md flex items-center justify-center gap-2 mx-auto"
-                    >
-                        <Share2 size={18} /> 결과 공유하기
-                    </button>
-                </div>
-            )}
+                {gameState === 'won' && (
+                    <div className="text-center animate-bounce p-4 rounded-xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+                        <div className="text-2xl font-bold text-green-500 mb-2">축하합니다! 성공하셨습니다! 🎉</div>
+                        <div className="text-gray-500 dark:text-gray-400 mb-4">기록: {timer}초</div>
+                        <button
+                            onClick={() => shareCanvas(containerRef.current, '지뢰찾기', `${timer}초`)}
+                            className="px-6 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg font-bold transition-colors shadow-md flex items-center justify-center gap-2 mx-auto"
+                        >
+                            <Share2 size={18} /> 결과 공유하기
+                        </button>
+                    </div>
+                )}
+            </div>
 
             <div className="text-center text-sm text-gray-500">
                 <p>좌클릭: 칸 열기 / 우클릭: 깃발 꽂기</p>

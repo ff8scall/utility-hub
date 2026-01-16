@@ -119,7 +119,7 @@ const Home = () => {
         <div className="space-y-8">
             <SEO
                 title="Tool Hive - 온라인 도구 모음"
-                description="일상생활과 업무에 필요한 39가지 유용한 온라인 도구를 무료로 제공합니다. 단위 변환, 계산기, 텍스트 도구, 개발 도구 등."
+                description={`일상생활과 업무에 필요한 ${tools.length}가지 이상의 유용한 온라인 도구를 무료로 제공합니다. 단위 변환, 계산기, 텍스트 도구, 개발 도구 등.`}
                 keywords="온라인도구, 유틸리티, 변환기, 계산기, 개발도구, MBTI 테스트, 이미지 리사이즈, 마크다운 에디터"
                 schema={{
                     "@context": "https://schema.org",
@@ -139,7 +139,7 @@ const Home = () => {
                     온라인 도구 모음
                 </h1>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    일상생활과 업무에 필요한 {tools.length}가지 유용한 도구를 한곳에서 만나보세요
+                    일상생활과 업무에 필요한 {tools.length}가지 이상의 유용한 도구를 한곳에서 만나보세요
                 </p>
 
                 {/* Search Bar */}
