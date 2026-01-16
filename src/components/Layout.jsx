@@ -77,6 +77,9 @@ const Layout = ({ children }) => {
                 { path: '/tanghulu-maker', label: '탕후루 만들기' },
                 { path: '/missile-dodge', label: '미사일 피하기' },
                 { path: '/flappy-bird', label: '파닥파닥 버드' },
+                { path: '/snake-game', label: '스네이크 게임' },
+                { path: '/sudoku', label: '스도쿠' },
+                { path: '/tower-stacker', label: '탑 쌓기' },
                 { path: '/dice-roller', label: '주사위 굴리기' },
             ]
         },

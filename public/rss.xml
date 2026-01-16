@@ -3,9 +3,9 @@
   <channel>
     <title>Utility Hub</title>
     <link>https://ff8scall.github.io/</link>
-    <description>66개 이상의 무료 온라인 도구 모음</description>
+    <description>88개 이상의 무료 온라인 도구 모음</description>
     <language>ko-kr</language>
-    <lastBuildDate>Wed, 17 Dec 2025 13:43:33 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 16 Jan 2026 10:20:00 GMT</lastBuildDate>
     <atom:link href="https://ff8scall.github.io/rss.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Length</title>
@@ -480,6 +480,24 @@
       <link>https://ff8scall.github.io/missile-dodge/</link>
       <guid>https://ff8scall.github.io/missile-dodge/</guid>
       <pubDate>Wed, 14 Jan 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>스네이크 게임 (Snake Game)</title>
+      <link>https://ff8scall.github.io/snake-game/</link>
+      <guid>https://ff8scall.github.io/snake-game/</guid>
+      <pubDate>Fri, 16 Jan 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>스도쿠 (Sudoku)</title>
+      <link>https://ff8scall.github.io/sudoku/</link>
+      <guid>https://ff8scall.github.io/sudoku/</guid>
+      <pubDate>Fri, 16 Jan 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>탑 쌓기 (Tower Stacker)</title>
+      <link>https://ff8scall.github.io/tower-stacker/</link>
+      <guid>https://ff8scall.github.io/tower-stacker/</guid>
+      <pubDate>Fri, 16 Jan 2026 00:00:00 GMT</pubDate>
     </item>
   </channel>
 </rss>

@@ -1,6 +1,6 @@
 # 🛠️ Utility Hub
 
-> 75개 이상의 무료 온라인 도구 모음 - 계산기, 변환기, 생성기 등
+> 88개 이상의 무료 온라인 도구 모음 - 계산기, 변환기, 생성기 등
 
 [![Live Demo](https://img.shields.io/badge/demo-live-success?style=for-the-badge)](https://ff8scall.github.io/utility-hub/)
 [![GitHub](https://img.shields.io/badge/github-repository-blue?style=for-the-badge&logo=github)](https://github.com/ff8scall/utility-hub)
@@ -35,6 +35,9 @@
 - **지뢰찾기** - 지뢰를 피해 모든 칸을 여는 퍼즐
 - **돌림판 돌리기** - 랜덤 추첨을 위한 룰렛 게임
 - **사다리 타기** - 내기할 때 좋은 사다리 게임
+- **스네이크 게임** - 먹이를 먹고 길어지는 클래식 뱀 게임
+- **스도쿠** - 클래식 9x9 로직 퍼즐 게임
+- **탑 쌓기** - 타이밍에 맞춰 블록을 높이 쌓는 게임
 
 ### 💰 생활/금융 (Finance & Life)
 - **대출금 계산기** - 원리금 균등상환 방식의 대출 이자 계산
@@ -155,7 +158,7 @@ Every push to the `main` branch triggers an automatic build and deployment.
 
 ## 🎨 Features
 
-- ✅ **40+ Tools** - Wide variety of useful utilities
+- ✅ **88+ Tools** - Wide variety of useful utilities
 - ✅ **Dark Mode** - Light/Dark theme support
 - ✅ **Responsive Design** - Works on mobile, tablet, and desktop
 - ✅ **SEO Optimized** - Sitemap, meta tags, and structured data

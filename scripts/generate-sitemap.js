@@ -105,7 +105,7 @@ function generateRSS(urls) {
   <channel>
     <title>Tool Hive - 무료 온라인 도구 모음</title>
     <link>${BASE_URL}/</link>
-    <description>66개 이상의 무료 온라인 도구 모음</description>
+    <description>88개 이상의 무료 온라인 도구 모음</description>
     <language>ko-kr</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml" />

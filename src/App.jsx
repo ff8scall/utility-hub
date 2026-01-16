@@ -90,6 +90,9 @@ import Game2048 from './pages/Game2048';
 import TanghuluGame from './pages/TanghuluGame';
 import FlappyBird from './pages/FlappyBird';
 import MissileDodge from './pages/MissileDodge';
+import SnakeGame from './pages/SnakeGame';
+import Sudoku from './pages/Sudoku';
+import TowerStacker from './pages/TowerStacker';
 
 
 function App() {
@@ -189,6 +192,11 @@ function App() {
               <Route path="/tanghulu-maker" element={<TanghuluGame />} />
               <Route path="/flappy-bird" element={<FlappyBird />} />
               <Route path="/missile-dodge" element={<MissileDodge />} />
+              <Route path="/snake-game" element={<SnakeGame />} />
+              <Route path="/sudoku" element={<Sudoku />} />
+              <Route path="/sudoku-game" element={<Sudoku />} />
+              <Route path="/tower-stacker" element={<TowerStacker />} />
+              <Route path="/tower-blocks" element={<TowerStacker />} />
               <Route path="/cron-generator" element={<CronGenerator />} />
               <Route path="/csv-json" element={<CsvJsonConverter />} />
               <Route path="/discount-calculator" element={<DiscountCalculator />} />

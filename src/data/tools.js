@@ -6,7 +6,7 @@ import {
     Heart, Brain, Scroll, Gift, PenTool, Timer, CheckSquare, Lightbulb,
     Binary, FileCode, Edit, GitCompare, Barcode, Youtube, ImageIcon,
     Ruler, Weight, FileDigit, Key, Thermometer, Link, Trophy, MousePointer2, Crosshair, Target, Bomb, Disc, GitCommit,
-    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices, Utensils, Bird
+    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices, Utensils, Bird, Grid3X3, Layers
 } from 'lucide-react';
 
 export const toolCategories = {
@@ -885,5 +885,35 @@ export const tools = [
         icon: Dices,
         color: 'bg-purple-600',
         keywords: ['주사위', 'dice', 'roller', 'd20', 'rpg']
+    },
+    {
+        id: 'snake-game',
+        title: '스네이크 게임',
+        description: '먹이를 먹고 점점 길어지는 클래식 뱀 게임',
+        path: '/snake-game',
+        category: 'games',
+        icon: Activity,
+        color: 'bg-emerald-500',
+        keywords: ['스네이크', '뱀게임', 'snake', 'game', 'classic']
+    },
+    {
+        id: 'sudoku',
+        title: '스도쿠',
+        description: '클래식 9x9 로직 퍼즐 게임',
+        path: '/sudoku',
+        category: 'games',
+        icon: Grid3X3,
+        color: 'bg-blue-500',
+        keywords: ['스도쿠', 'sudoku', '로직퍼즐', '퍼즐', 'puzzle']
+    },
+    {
+        id: 'tower-stacker',
+        title: '탑 쌓기',
+        description: '정확한 타이밍에 블록을 높이 쌓는 게임',
+        path: '/tower-stacker',
+        category: 'games',
+        icon: Layers,
+        color: 'bg-indigo-500',
+        keywords: ['탑쌓기', '타워빌더', 'stacker', 'tower', 'timing']
     }
 ];

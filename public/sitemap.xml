@@ -509,4 +509,22 @@
   <changefreq>weekly</changefreq>
   <priority>0.8</priority>
 </url>
+<url>
+  <loc>https://ff8scall.github.io/snake-game/</loc>
+  <lastmod>2026-01-16</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://ff8scall.github.io/sudoku/</loc>
+  <lastmod>2026-01-16</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://ff8scall.github.io/tower-stacker/</loc>
+  <lastmod>2026-01-16</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
 </urlset>
