@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Share2, Trophy, RotateCcw, Play, ArrowDown } from 'lucide-react';
 import SEO from '../components/SEO';
+import ToolGuide from '../components/ToolGuide';
 import useShareCanvas from '../hooks/useShareCanvas';
 
 const CANVAS_WIDTH = 400;
@@ -187,12 +188,26 @@ const TowerStacker = () => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [handleAction]);
 
+    const stackFaqs = [
+        { q: "탑 쌓기 게임은 무료인가요?", a: "네, 브라우저에서 즉시 실행 가능한 100% 무료 HTML5 게임입니다." },
+        { q: "모바일에서도 플레이 가능한가요?", a: "네, 터치 조작에 최적화되어 있어 스마트폰에서도 원활하게 즐기실 수 있습니다." }
+    ];
+
+    const stackSteps = [
+        "화면을 클릭하거나 스페이스바를 눌러 블록을 떨어뜨리세요.",
+        "아래 블록과 정확히 일치하게 쌓아야 크기가 줄어들지 않습니다.",
+        "블록이 밖으로 벗어나면 게임이 종료됩니다."
+    ];
+
     return (
-        <div className="max-w-2xl mx-auto space-y-6 select-none">
+        <div className="max-w-4xl mx-auto space-y-8">
             <SEO
-                title="탑 쌓기 - 타이밍 액션 게임"
-                description="정확한 타이밍에 블록을 쌓아 높은 탑을 만드세요! 당신의 집중력을 테스트하고 최고 기록을 공유하세요."
-                keywords="탑쌓기, 타워빌더, 타이밍게임, 미니게임, 무료게임, tower stacker"
+                title="무료 온라인 탑 쌓기 게임 | 타워 스태커 중독성 퍼즐"
+                description="아슬아슬한 긴장감! 하늘 끝까지 블록을 쌓아 올리는 온라인 탑 쌓기 게임입니다. 높은 점수에 도전하고 친구들과 기록을 공유해보세요."
+                keywords="탑쌓기게임, 타워스태커, 블록쌓기, 온라인게임, 무료미니게임, 중독성게임, 퍼즐게임"
+                category="게임"
+                faqs={stackFaqs}
+                steps={stackSteps}
             />
 
             <div className="text-center space-y-2">
@@ -284,15 +299,28 @@ const TowerStacker = () => {
                 </div>
             </div>
 
-            <div className="card p-6 bg-slate-50 dark:bg-slate-900/50 border-none shadow-none text-center">
-                <h3 className="font-bold mb-3 flex items-center justify-center gap-2">
-                    🏆 게임 팁
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                    블록이 아래 블록과 <strong>정확히</strong> 일치할수록 탑이 안정적입니다.<br />
-                    가장자리를 벗어난 부분은 잘려나가며 다음 블록의 크기가 줄어드니 주의하세요!
-                </p>
-            </div>
+            <ToolGuide
+                title="탑 쌓기 (Tower Stacker)"
+                intro="탑 쌓기는 고도의 집중력과 타이밍이 필요한 클래식 아케이드 게임입니다. 단순해 보이지만 층수가 높아질수록 빨라지는 속도와 좁아지는 블록 사이에서 한계에 도전해보세요. 친구들과 최고 기록을 공유하며 누가 가장 높은 건물을 올렸는지 내기하기에도 좋습니다."
+                steps={[
+                    "게임 시작 버튼을 누르거나 화면을 클릭하여 첫 번째 블록을 배치합니다.",
+                    "좌우로 움직이는 다음 블록이 아래 블록과 정확히 일치할 때 클릭하세요.",
+                    "아래 블록을 벗어난 부분은 자동으로 잘려나가며 탑의 크기가 줄어듭니다.",
+                    "한 조각이라도 올리지 못하고 블록이 공중으로 떨어지면 게임이 종료됩니다."
+                ]}
+                tips={[
+                    "초반에는 속도가 비교적 느리므로 최대한 아래 블록과 완벽하게 일치시키는 것이 중요합니다.",
+                    "완벽하게 일치시키면(Perfect) 블록 크기가 줄어들지 않아 후반부에 훨씬 유리해집니다.",
+                    "리듬감을 타는 것이 중요합니다. 블록이 벽에 부딪히는 소리나 타이밍을 몸으로 익혀보세요.",
+                    "시선은 블록의 정중앙보다 블록의 앞쪽 모서리에 집중하는 것이 타이밍을 잡기 더 쉽습니다."
+                ]}
+                faqs={[
+                    { q: "모바일에서도 플레이가 가능한가요?", a: "네, 터치 인터페이스에 최적화되어 있어 모바일 브라우저에서도 클릭만으로 즐거운 플레이가 가능합니다." },
+                    { q: "최고 기록은 저장되나요?", a: "브라우저의 로컬 스토리지를 사용하여 여러분의 최고 기록(High Score)을 안전하게 보관합니다." },
+                    { q: "게임 중 멈추고 싶을 때는 어떻게 하나요?", a: "탑 쌓기는 실시간 타이밍 게임으로 일시정지 기능은 없지만, 한 게임이 매우 짧아 긴장감 있게 즐기실 수 있습니다." },
+                    { q: "완벽하게 쌓으면(Perfect) 보너스가 있나요?", a: "네, 현재 코드에서는 블록 크기가 줄어들지 않는 혜택이 있어 장기적인 기록 갱신에 필수적입니다." }
+                ]}
+            />
         </div>
     );
 };

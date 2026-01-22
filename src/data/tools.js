@@ -20,37 +20,96 @@ export const toolCategories = {
     fun: '운세/재미'
 };
 
+export const toolCategoryData = {
+    unit: {
+        title: '무료 온라인 단위 변환기 모음',
+        description: '길이, 무게, 환율, 온도, 면적 등 모든 단위를 한곳에서 즉시 변환하세요. 실시간 환율 정보와 정확한 단위 변환 공식을 제공합니다.',
+        keywords: '단위변환기, 환율계산기, 길이변환, 무게변환, 온도계산기, 무료단위변환',
+        icon: Ruler,
+        color: 'from-sky-500 to-blue-500'
+    },
+    finance: {
+        title: '생활 및 금융 계산기 모음',
+        description: '대출 이자, 연봉 실수령액, 퇴직금, 최저임금 등 실생활에 꼭 필요한 금융 계산기들을 사용해보세요. 정확한 법정 산식과 최신 데이터를 반영합니다.',
+        keywords: '금융계산기, 대출이자계산기, 연봉실수령액, 퇴직금계산, 최저임금계산기, 생활계산기',
+        icon: DollarSign,
+        color: 'from-emerald-500 to-teal-500'
+    },
+    text: {
+        title: '텍스트 변환 및 분석 도구',
+        description: '글자수 세기, 대소문자 변환, 유니코드 변환 등 텍스트 편집에 필요한 유용한 도구들입니다. 복사 붙여넣기만으로 간편하게 사용하세요.',
+        keywords: '글자수세기, 텍스트변환, 대소문자변환, 유니코드변환, 텍스트도구',
+        icon: Type,
+        color: 'from-amber-500 to-orange-500'
+    },
+    dev: {
+        title: '개발자 필수 온라인 도구 모음',
+        description: 'JSON 포매터, Base64 인코더, 해시 생성기, URL 인코더 등 개발 생산성을 극대화하는 전문 도구들을 별도의 설치 없이 브라우저에서 사용하세요.',
+        keywords: '개발자도구, JSON포매터, Base64변환, 해시생성기, 정규식테스터, 온라인코딩도구',
+        icon: Code,
+        color: 'from-slate-700 to-slate-900'
+    },
+    utility: {
+        title: '편리한 생활 유틸리티 도구',
+        description: 'QR코드 생성기, 바코드 생성, 비밀번호 생성, 세계 시계 등 일상의 번거로움을 해결해주는 다양한 유틸리티 도구 모음입니다.',
+        keywords: '유틸리티도구, QR코드생성기, 바코드생성, 비밀번호생성기, 온라인색상표, IP주소확인',
+        icon: Zap,
+        color: 'from-indigo-500 to-blue-600'
+    },
+    health: {
+        title: '건강 및 신체 지수 계산기',
+        description: 'BMI(비만도), BMR(기초대사량), 바이오리듬 등 자신의 건강 상태를 체크할 수 있는 전문적인 건강 지수 계산기를 제공합니다.',
+        keywords: '건강계산기, BMI계산기, 비만도측정, 기초대사량계산, 바이오리듬확인',
+        icon: Activity,
+        color: 'from-rose-500 to-pink-500'
+    },
+    games: {
+        title: '무료 온라인 미니 게임 모음',
+        description: '수박 게임, 2048, 스도쿠, 스네이크 등 별도의 설치 없이 바로 즐길 수 있는 중독성 만점 미니 게임들을 한곳에서 플레이하세요.',
+        keywords: '미니게임, 온라인게임, 무료게임, 수박게임, 2048, 스도쿠, 간단한게임',
+        icon: Gamepad2,
+        color: 'from-orange-500 to-red-600'
+    },
+    fun: {
+        title: '재미있는 운세와 심리 테스트 무더기',
+        description: '정통 사주팔자부터 MBTI 성격 테스트, 오늘의 운세, 타로 카드까지! 당신의 운세와 심리를 알아보는 즐거운 콘텐츠가 가득합니다.',
+        keywords: '무료운세, 사주팔자, MBTI테스트, 심리테스트, 타로카드, 오늘의운세',
+        icon: Sparkles,
+        color: 'from-purple-500 to-fuchsia-600'
+    }
+};
+
 export const tools = [
     // Unit Converters
     {
         id: 'length',
-        title: '길이 변환기',
-        description: '미터, 피트, 인치 등 길이 단위 변환',
+        title: '무료 온라인 길이 변환기 | 미터, 피트, 인치 단위 계산',
+        description: '다양한 길이 단위를 즉시 변환하세요. 미터(m), 피트(ft), 인치(in), 센티미터(cm) 등 모든 길이 단위를 지원하는 정확한 무료 온라인 변환 도구입니다.',
         path: '/length',
         category: 'unit',
         icon: Ruler,
         color: 'bg-sky-500',
-        keywords: ['길이', '단위', '미터', '피트', 'length', 'converter']
+        keywords: ['길이변환기', '단위변환', '미터피트변환', '인치센티미터', '무료온라인도구', 'length converter']
     },
     {
         id: 'weight',
-        title: '무게 변환기',
-        description: '킬로그램, 파운드 등 무게 단위 변환',
+        title: '무료 무게 변환기 | 킬로그램, 파운드, 온스 단위 계산',
+        description: '킬로그램(kg), 파운드(lb), 온스(oz), 그람(g) 등 다양한 무게 단위를 실시간으로 변환하세요. 정확하고 간편한 무료 온라인 무게 변환 도구.',
         path: '/weight',
         category: 'unit',
         icon: Weight,
         color: 'bg-sky-600',
-        keywords: ['무게', '단위', '킬로그램', '파운드', 'weight', 'converter']
+        keywords: ['무게변환기', '단위변환', '킬로그램파운드', '그램온스', '무료온라인도구', 'weight converter']
     },
     {
         id: 'currency',
-        title: '환율 계산기',
-        description: '실시간 환율 변환 및 계산',
+        title: '실시간 환율 계산기 | 오늘 달러 엔화 유로 환율 변환',
+        description: '전 세계 주요 통화의 실시간 환율을 확인하고 변환하세요. 달러(USD), 엔화(JPY), 유로(EUR) 등 최신 환율 정보를 기반으로 한 정확한 계산기.',
         path: '/currency',
         category: 'unit',
         icon: DollarSign,
         color: 'bg-sky-700',
-        keywords: ['환율', '통화', '달러', 'currency', 'exchange']
+        keywords: ['환율계산기', '오늘의환율', '달러환율', '엔화환율', '통화변환', '실시간환율', 'currency exchange']
     },
     {
         id: 'temperature-converter',
@@ -76,13 +135,13 @@ export const tools = [
     // Health
     {
         id: 'bmi',
-        title: 'BMI 계산기',
-        description: '체질량 지수 계산 및 건강 상태 확인',
+        title: '무료 BMI 계산기 | 비만도 측정 및 체질량 지수 확인',
+        description: '나의 비만도는 얼마일까? 키와 몸무게만 입력하여 정확한 BMI(체질량 지수)를 측정하고 건강 상태를 확인하세요. WHO 기준 표준 체중 가이드 제공.',
         path: '/bmi',
         category: 'health',
         icon: Activity,
         color: 'bg-green-500',
-        keywords: ['bmi', '체질량', '비만도', '건강', 'health']
+        keywords: ['bmi계산기', '비만도측정', '체질량지수', '건강관리', '다이어트계산기', '무료검사', 'health calculator']
     },
     {
         id: 'bmr',
@@ -188,13 +247,13 @@ export const tools = [
     },
     {
         id: 'suika-game',
-        title: '수박 게임',
-        description: '과일을 합쳐서 더 큰 과일 만들기 (머지 퍼즐)',
+        title: '수박 게임 (Suika Game) | 무료 온라인 머지 퍼즐 게임',
+        description: '중독성 강한 수박 게임을 온라인에서 무료로 즐기세요! 과일을 합쳐서 가장 큰 수박을 만드는 머지 퍼즐 게임. 높은 점수에 도전하고 친구들과 공유하세요.',
         path: '/suika-game',
         category: 'games',
         icon: Gamepad2,
         color: 'bg-green-500',
-        keywords: ['수박게임', 'suika', 'game', 'puzzle', 'merge', '과일']
+        keywords: ['수박게임', 'suikagame', '머지퍼즐', '과일합치기', '무료게임', '중독성게임', '정식버전']
     },
     {
         id: '2048',

@@ -188,6 +188,7 @@ const Sudoku = () => {
                 title="스도쿠 - 클래식 로직 퍼즐"
                 description="다양한 난이도의 클래식 스도쿠를 즐겨보세요. 두뇌를 단련하고 기록을 세워 공유해보세요!"
                 keywords="스도쿠, sudoku, 로직퍼즐, 퍼즐게임, 두뇌게임, 무료게임"
+                category="게임"
             />
 
             <div className="flex flex-col md:flex-row items-start gap-8" ref={containerRef}>

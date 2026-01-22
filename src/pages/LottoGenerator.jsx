@@ -29,12 +29,26 @@ const LottoGenerator = () => {
         return 'bg-green-500';
     };
 
+    const lottoFaqs = [
+        { q: "로또 번호 생성은 무료인가요?", a: "네, 본 서비스는 100% 무료이며 제한 없이 번호를 생성하실 수 있습니다." },
+        { q: "생성된 번호의 당첨 확률은 어떤가요?", a: "모든 번호 조합은 수학적으로 동일한 8,145,060분의 1의 확률을 가집니다." }
+    ];
+
+    const lottoSteps = [
+        "'번호 생성하기' 버튼을 클릭하세요.",
+        "생성된 6개의 숫자를 확인하세요. 번호는 자동으로 정렬됩니다.",
+        "마음에 드는 조합이 나올 때까지 반복해서 생성할 수 있습니다."
+    ];
+
     return (
         <div className="max-w-2xl mx-auto space-y-6">
             <SEO
-                title="로또 번호 생성기 - Utility Hub"
-                description="행운의 로또 번호를 자동으로 생성해드립니다. 1부터 45까지의 숫자 중 6개를 무작위로 추출합니다."
-                keywords="로또, 로또번호, 번호생성기, 행운의숫자"
+                title="무료 로또 번호 생성기 | 2026 로또 명당 번호 추출 및 당첨 확률 분석"
+                description="오늘의 행운을 잡으세요! 1부터 45까지 무작위로 추출되는 무료 온라인 로또 번호 생성기. 역대 당첨 확률 정보와 번호 색상별 의미, 책임 있는 로또 구매 가이드를 확인하세요."
+                keywords="로또번호생성기, 로또자동번호, 로또당첨번호, 무료로또번호, 행운의숫자, 로또확률, 로또명당번호"
+                category="운세/재미"
+                faqs={lottoFaqs}
+                steps={lottoSteps}
             />
 
             <header className="text-center space-y-2">

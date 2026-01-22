@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
-const SEO = ({ title, description, keywords, image, schema }) => {
+const SEO = ({ title, description, keywords, image, schema, category, faqs, steps }) => {
     const location = useLocation();
     const siteTitle = 'Tool Hive';
     const siteUrl = 'https://tool-hive.vercel.app';
@@ -11,14 +11,15 @@ const SEO = ({ title, description, keywords, image, schema }) => {
     const metaDescription = description || defaultDescription;
     const metaKeywords = keywords ? `${keywords}, 유틸리티, 도구, 계산기, 변환기` : '유틸리티, 도구, 계산기, 변환기, 웹 툴';
 
-    // Default OG image (you can create a nice banner image later)
+    // Default OG image
     const defaultImage = `${siteUrl}/og-image.png`;
     const ogImage = image || defaultImage;
 
     // Current page URL
     const currentUrl = `${siteUrl}${location.pathname}${location.hash}`;
 
-    const defaultSchema = {
+    // WebSite Schema
+    const websiteSchema = {
         "@context": "https://schema.org",
         "@type": "WebSite",
         "name": siteTitle,
@@ -31,7 +32,90 @@ const SEO = ({ title, description, keywords, image, schema }) => {
         }
     };
 
-    const schemaData = schema || defaultSchema;
+    // Breadcrumb Schema
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "홈",
+                "item": siteUrl
+            }
+        ]
+    };
+
+    if (category) {
+        const categoryMap = {
+            '단위 변환': 'unit',
+            '생활/금융': 'finance',
+            '텍스트': 'text',
+            '개발': 'dev',
+            '개발자 도구': 'dev',
+            '유틸리티': 'utility',
+            '건강': 'health',
+            '게임': 'games',
+            '운세/재미': 'fun'
+        };
+        const categoryId = categoryMap[category] || category;
+
+        breadcrumbSchema.itemListElement.push({
+            "@type": "ListItem",
+            "position": 2,
+            "name": category,
+            "item": `${siteUrl}/category/${categoryId}`
+        });
+
+        if (title) {
+            breadcrumbSchema.itemListElement.push({
+                "@type": "ListItem",
+                "position": 3,
+                "name": title,
+                "item": currentUrl
+            });
+        }
+    } else if (title) {
+        breadcrumbSchema.itemListElement.push({
+            "@type": "ListItem",
+            "position": 2,
+            "name": title,
+            "item": currentUrl
+        });
+    }
+
+    const schemas = [websiteSchema, breadcrumbSchema];
+    if (schema) schemas.push(schema);
+
+    // FAQ Schema
+    if (faqs && faqs.length > 0) {
+        schemas.push({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqs.map(faq => ({
+                "@type": "Question",
+                "name": faq.q,
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.a
+                }
+            }))
+        });
+    }
+
+    // HowTo Schema
+    if (steps && steps.length > 0 && title) {
+        schemas.push({
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": `${title} 사용 방법`,
+            "step": steps.map((step, index) => ({
+                "@type": "HowToStep",
+                "position": index + 1,
+                "text": step
+            }))
+        });
+    }
 
     return (
         <Helmet>
@@ -65,9 +149,11 @@ const SEO = ({ title, description, keywords, image, schema }) => {
             <meta name="author" content="Tool Hive" />
 
             {/* Schema.org JSON-LD */}
-            <script type="application/ld+json">
-                {JSON.stringify(schemaData)}
-            </script>
+            {schemas.map((s, i) => (
+                <script key={i} type="application/ld+json">
+                    {JSON.stringify(s)}
+                </script>
+            ))}
         </Helmet>
     );
 };

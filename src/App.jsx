@@ -1,9 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from './context/ThemeContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
+import CategoryPage from './pages/CategoryPage';
 import LengthConverter from './pages/LengthConverter';
 import WeightConverter from './pages/WeightConverter';
 import LoanCalculator from './pages/LoanCalculator';
@@ -103,6 +104,7 @@ function App() {
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/category/:categoryId" element={<CategoryPage />} />
               <Route path="/length" element={<LengthConverter />} />
               <Route path="/weight" element={<WeightConverter />} />
               <Route path="/loan" element={<LoanCalculator />} />

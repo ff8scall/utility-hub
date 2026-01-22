@@ -20,6 +20,7 @@ const distPath = path.resolve(__dirname, '../dist');
 const sitemapPath = path.join(distPath, 'sitemap.xml');
 
 // Base URL - ensuring it matches the user's domain
+// Base URL - ensuring it matches the user's domain
 const BASE_URL = process.env.VITE_BASE_URL || 'https://tool-hive.vercel.app';
 
 function generateSitemap() {
@@ -41,6 +42,27 @@ function generateSitemap() {
         changefreq: 'weekly',
         priority: '1.0'
     });
+
+    // Add category pages
+    const categoryMatches = content.matchAll(/(\w+):\s*'[^']+'/g);
+    const categoryIds = new Set();
+
+    // The previous regex might catch many things, let's be more specific for toolCategories object
+    const categoryBlock = content.match(/export const toolCategories = {([\s\S]+?)}/);
+    if (categoryBlock) {
+        const ids = categoryBlock[1].matchAll(/(\w+):/g);
+        for (const id of ids) {
+            categoryIds.add(id[1]);
+        }
+    }
+
+    for (const id of categoryIds) {
+        urls.push({
+            loc: `${BASE_URL}/category/${id}/`,
+            changefreq: 'weekly',
+            priority: '0.9'
+        });
+    }
 
     // Add tool pages
     for (const match of matches) {

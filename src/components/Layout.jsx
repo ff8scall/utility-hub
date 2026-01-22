@@ -25,6 +25,7 @@ const Layout = ({ children }) => {
 
     const navCategories = [
         {
+            id: 'unit',
             title: '단위 변환',
             items: [
                 { path: '/length', label: '길이 변환기' },
@@ -37,6 +38,7 @@ const Layout = ({ children }) => {
             ]
         },
         {
+            id: 'finance',
             title: '생활/금융',
             items: [
                 { path: '/loan', label: '대출금 계산기' },
@@ -52,6 +54,7 @@ const Layout = ({ children }) => {
             ]
         },
         {
+            id: 'health',
             title: '건강',
             items: [
                 { path: '/bmi', label: 'BMI 계산기' },
@@ -60,6 +63,7 @@ const Layout = ({ children }) => {
             ]
         },
         {
+            id: 'games',
             title: '게임',
             items: [
                 { path: '/reaction-test', label: '반응속도 테스트' },
@@ -84,6 +88,7 @@ const Layout = ({ children }) => {
             ]
         },
         {
+            id: 'text',
             title: '텍스트',
             items: [
                 { path: '/word-count', label: '글자수 세기' },
@@ -94,6 +99,7 @@ const Layout = ({ children }) => {
             ]
         },
         {
+            id: 'dev',
             title: '개발자 도구',
             items: [
                 { path: '/base-converter', label: '진법 변환기' },
@@ -117,6 +123,7 @@ const Layout = ({ children }) => {
             ]
         },
         {
+            id: 'utility',
             title: '유틸리티',
             items: [
                 { path: '/qr-gen', label: 'QR코드 생성기' },
@@ -136,6 +143,7 @@ const Layout = ({ children }) => {
             ]
         },
         {
+            id: 'fun',
             title: '운세/재미',
             items: [
                 { path: '/blood-type', label: '혈액형 성격' },
@@ -179,13 +187,13 @@ const Layout = ({ children }) => {
 
                         {navCategories.map((category) => (
                             <div key={category.title} className="relative group">
-                                <button
-                                    type="button"
+                                <Link
+                                    to={`/category/${category.id}`}
                                     className="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors py-2"
                                 >
                                     {category.title}
                                     <ChevronDown className="w-3 h-3" />
-                                </button>
+                                </Link>
                                 {/* Dropdown */}
                                 <div className="absolute top-full left-0 w-48 bg-white dark:bg-gray-950 border border-border rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
                                     <div className="py-1">
@@ -239,9 +247,13 @@ const Layout = ({ children }) => {
                         </Link>
                         {navCategories.map((category) => (
                             <div key={category.title} className="space-y-2">
-                                <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                                <Link
+                                    to={`/category/${category.id}`}
+                                    className="text-xs font-bold text-muted-foreground uppercase tracking-wider hover:text-primary transition-colors"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
                                     {category.title}
-                                </div>
+                                </Link>
                                 <div className="pl-4 space-y-1 border-l-2 border-border">
                                     {category.items.map((item) => (
                                         <Link
@@ -266,15 +278,42 @@ const Layout = ({ children }) => {
                 {location.pathname !== '/' && <RelatedTools />}
             </main>
 
-            {/* Footer */}
-            <footer className="border-t border-border py-8 mt-auto bg-muted/30">
-                <div className="container-custom text-center text-muted-foreground text-sm">
-                    <div className="flex justify-center gap-4 mb-4">
-                        <Link to="/terms" className="hover:text-foreground">이용약관</Link>
-                        <Link to="/privacy" className="hover:text-foreground">개인정보처리방침</Link>
-                        <Link to="/contact" className="hover:text-foreground">문의하기</Link>
+            {/* Footer with SEO Sitemap */}
+            <footer className="border-t border-border mt-auto bg-muted/30">
+                <div className="container-custom py-12">
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
+                        {navCategories.map((category) => (
+                            <div key={category.title} className="space-y-4">
+                                <h4 className="font-bold text-sm text-foreground uppercase tracking-wider">{category.title}</h4>
+                                <ul className="space-y-2">
+                                    {category.items.slice(0, 8).map((item) => (
+                                        <li key={item.path}>
+                                            <Link
+                                                to={item.path}
+                                                className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                                            >
+                                                {item.label}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
                     </div>
-                    <p>© {new Date().getFullYear()} Tool Hive. All rights reserved.</p>
+
+                    <div className="pt-8 border-t border-border/50 text-center space-y-4">
+                        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+                            <Link to="/terms" className="text-muted-foreground hover:text-foreground underline-offset-4 hover:underline">이용약관</Link>
+                            <Link to="/privacy" className="text-muted-foreground hover:text-foreground underline-offset-4 hover:underline">개인정보처리방침</Link>
+                            <Link to="/contact" className="text-muted-foreground hover:text-foreground underline-offset-4 hover:underline">문의하기</Link>
+                            <a href="/sitemap.xml" className="text-muted-foreground hover:text-foreground underline-offset-4 hover:underline">사이트맵</a>
+                        </div>
+                        <div className="space-y-1">
+                            <p className="text-sm font-bold text-foreground opacity-80">Tool Hive (툴 하이브)</p>
+                            <p className="text-xs text-muted-foreground italic">"당신의 일상을 더 편리하게 만드는 88가지 이상의 무료 온라인 도구 모음"</p>
+                        </div>
+                        <p className="text-xs text-muted-foreground/60">© {new Date().getFullYear()} Tool Hive. All rights reserved.</p>
+                    </div>
                 </div>
             </footer>
 

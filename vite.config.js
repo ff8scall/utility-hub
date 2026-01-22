@@ -2,7 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import fs from 'fs'
+import { fileURLToPath } from 'url'
 import { createRequire } from 'module'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const require = createRequire(import.meta.url)
 const vitePrerender = require('vite-plugin-prerender')
@@ -11,8 +15,21 @@ const vitePrerender = require('vite-plugin-prerender')
 const getRoutes = () => {
   try {
     const toolsContent = fs.readFileSync(path.resolve(__dirname, 'src/data/tools.js'), 'utf-8');
-    const matches = toolsContent.matchAll(/path:\s*'([^']+)'/g);
     const routes = ['/']; // Add root
+
+    // Add categories - dynamically extract from toolCategories object
+    const categoryBlockMatch = toolsContent.match(/export const toolCategories = \{([^}]+)\}/);
+    if (categoryBlockMatch) {
+      const categoryLines = categoryBlockMatch[1].split('\n');
+      for (const line of categoryLines) {
+        const idMatch = line.match(/^\s*(\w+):/);
+        if (idMatch) {
+          routes.push(`/category/${idMatch[1]}`);
+        }
+      }
+    }
+
+    const matches = toolsContent.matchAll(/path:\s*'([^']+)'/g);
     for (const match of matches) {
       routes.push(match[1]);
     }
