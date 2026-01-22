@@ -96,6 +96,10 @@ import Sudoku from './pages/Sudoku';
 import TowerStacker from './pages/TowerStacker';
 
 
+import PersonalColor from './pages/PersonalColor';
+import PastLife from './pages/PastLife';
+import PetMbti from './pages/PetMbti';
+
 function App() {
   return (
     <HelmetProvider>
@@ -216,6 +220,12 @@ function App() {
               <Route path="/severance-calc" element={<SeveranceCalculator />} />
               <Route path="/minimum-wage" element={<MinimumWageCalculator />} />
               <Route path="/min-wage-calc" element={<MinimumWageCalculator />} />
+              <Route path="/personal-color" element={<PersonalColor />} />
+              <Route path="/color-test" element={<PersonalColor />} />
+              <Route path="/past-life" element={<PastLife />} />
+              <Route path="/name-past-life" element={<PastLife />} />
+              <Route path="/pet-mbti" element={<PetMbti />} />
+              <Route path="/dog-cat-mbti" element={<PetMbti />} />
               <Route path="*" element={
                 <div className="flex flex-col items-center justify-center min-h-[50vh] text-center px-4">
                   <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">404</h1>

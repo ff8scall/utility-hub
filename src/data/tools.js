@@ -974,5 +974,35 @@ export const tools = [
         icon: Layers,
         color: 'bg-indigo-500',
         keywords: ['탑쌓기', '타워빌더', 'stacker', 'tower', 'timing']
+    },
+    {
+        id: 'personal-color',
+        title: '퍼스널 컬러 진단',
+        description: '무료 웜톤 쿨톤 자가 진단 테스트',
+        path: '/personal-color',
+        category: 'fun',
+        icon: Palette,
+        color: 'bg-pink-500',
+        keywords: ['퍼스널컬러', '자가진단', '웜톤', '쿨톤', 'personalcolor', 'test']
+    },
+    {
+        id: 'past-life',
+        title: '나의 전생 알아보기',
+        description: '이름으로 보는 나의 신비로운 전생 테스트',
+        path: '/past-life',
+        category: 'fun',
+        icon: Scroll,
+        color: 'bg-indigo-600',
+        keywords: ['전생', '이름전생', 'pastlife', 'fortune', '재미']
+    },
+    {
+        id: 'pet-mbti',
+        title: '펫 MBTI 진단',
+        description: '행동으로 알아보는 우리 반려동물 성격 유형',
+        path: '/pet-mbti',
+        category: 'fun',
+        icon: PawPrint,
+        color: 'bg-orange-500',
+        keywords: ['펫mbti', '반려동물', '강아지mbti', '고양이mbti', 'petmbti']
     }
 ];
