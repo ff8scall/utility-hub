@@ -6,7 +6,7 @@ import {
     Heart, Brain, Scroll, Gift, PenTool, Timer, CheckSquare, Lightbulb,
     Binary, FileCode, Edit, GitCompare, Barcode, Youtube, ImageIcon,
     Ruler, Weight, FileDigit, Key, Thermometer, Link, Trophy, MousePointer2, Crosshair, Target, Bomb, Disc, GitCommit,
-    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices, Utensils, Bird, Grid3X3, Layers
+    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices, Utensils, Bird, Grid3X3, Layers, PawPrint
 } from 'lucide-react';
 
 export const toolCategories = {
