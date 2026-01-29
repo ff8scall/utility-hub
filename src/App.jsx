@@ -99,6 +99,42 @@ import TowerStacker from './pages/TowerStacker';
 import PersonalColor from './pages/PersonalColor';
 import PastLife from './pages/PastLife';
 import PetMbti from './pages/PetMbti';
+import MentalAge from './pages/MentalAge';
+import BrainStructure from './pages/BrainStructure';
+import JoseonJob from './pages/JoseonJob';
+import IfIAmGod from './pages/IfIAmGod';
+import FirstImpressionColor from './pages/FirstImpressionColor';
+import AnimalFace from './pages/AnimalFace';
+import PersonalScent from './pages/PersonalScent';
+import IdealType from './pages/IdealType';
+import CoupleCompatibility from './pages/CoupleCompatibility';
+import HiddenTalent from './pages/HiddenTalent';
+import BalanceGame from './pages/BalanceGame';
+import FortuneCookie from './pages/FortuneCookie';
+import ColorTest from './pages/ColorTest';
+import SpeedMath from './pages/SpeedMath';
+import BubbleWrap from './pages/BubbleWrap';
+import HearingTest from './pages/HearingTest';
+import SpellingQuiz from './pages/SpellingQuiz';
+import TimeSense from './pages/TimeSense';
+import PitchTest from './pages/PitchTest';
+import CapitalQuiz from './pages/CapitalQuiz';
+import TypingDefense from './pages/TypingDefense';
+import VocabularyTest from './pages/VocabularyTest';
+import DynamicAcuity from './pages/DynamicAcuity';
+import Hangman from './pages/Hangman';
+import MorseCode from './pages/MorseCode';
+import SmileDatingTest from './pages/SmileDatingTest';
+import DatingTest from './pages/DatingTest';
+import StressTest from './pages/StressTest';
+import BrainType from './pages/BrainType';
+import EqTest from './pages/EqTest';
+import SmartphoneAddiction from './pages/SmartphoneAddiction';
+import KkondaeTest from './pages/KkondaeTest';
+import HoguTest from './pages/HoguTest';
+import DebateTest from './pages/DebateTest';
+import IdolPositionTest from './pages/IdolPositionTest';
+import ResilienceTest from './pages/ResilienceTest';
 
 function App() {
   return (
@@ -226,6 +262,47 @@ function App() {
               <Route path="/name-past-life" element={<PastLife />} />
               <Route path="/pet-mbti" element={<PetMbti />} />
               <Route path="/dog-cat-mbti" element={<PetMbti />} />
+              <Route path="/mental-age" element={<MentalAge />} />
+              <Route path="/mind-age" element={<MentalAge />} />
+              <Route path="/brain-structure" element={<BrainStructure />} />
+              <Route path="/my-brain" element={<BrainStructure />} />
+              <Route path="/joseon-job" element={<JoseonJob />} />
+              <Route path="/past-job" element={<JoseonJob />} />
+              <Route path="/if-i-am-god" element={<IfIAmGod />} />
+              <Route path="/god-test" element={<IfIAmGod />} />
+              <Route path="/first-impression-color" element={<FirstImpressionColor />} />
+              <Route path="/my-color" element={<FirstImpressionColor />} />
+              <Route path="/animal-face" element={<AnimalFace />} />
+              <Route path="/personal-scent" element={<PersonalScent />} />
+              <Route path="/ideal-type" element={<IdealType />} />
+              <Route path="/couple-compatibility" element={<CoupleCompatibility />} />
+              <Route path="/hidden-talent" element={<HiddenTalent />} />
+              <Route path="/balance-game" element={<BalanceGame />} />
+              <Route path="/fortune-cookie" element={<FortuneCookie />} />
+              <Route path="/color-sensitivity" element={<ColorTest />} />
+              <Route path="/speed-math" element={<SpeedMath />} />
+              <Route path="/bubble-wrap" element={<BubbleWrap />} />
+              <Route path="/hearing-test" element={<HearingTest />} />
+              <Route path="/spelling-quiz" element={<SpellingQuiz />} />
+              <Route path="/time-sense" element={<TimeSense />} />
+              <Route path="/pitch-test" element={<PitchTest />} />
+              <Route path="/capital-quiz" element={<CapitalQuiz />} />
+              <Route path="/typing-defense" element={<TypingDefense />} />
+              <Route path="/vocabulary-test" element={<VocabularyTest />} />
+              <Route path="/dynamic-acuity" element={<DynamicAcuity />} />
+              <Route path="/hangman" element={<Hangman />} />
+              <Route path="/morse-code" element={<MorseCode />} />
+              <Route path="/smile-dating-test" element={<SmileDatingTest />} />
+              <Route path="/dating-test" element={<DatingTest />} />
+              <Route path="/stress-test" element={<StressTest />} />
+              <Route path="/brain-type" element={<BrainType />} />
+              <Route path="/eq-test" element={<EqTest />} />
+              <Route path="/smartphone-addiction" element={<SmartphoneAddiction />} />
+              <Route path="/kkondae-test" element={<KkondaeTest />} />
+              <Route path="/hogu-test" element={<HoguTest />} />
+              <Route path="/debate-test" element={<DebateTest />} />
+              <Route path="/idol-test" element={<IdolPositionTest />} />
+              <Route path="/resilience-test" element={<ResilienceTest />} />
               <Route path="*" element={
                 <div className="flex flex-col items-center justify-center min-h-[50vh] text-center px-4">
                   <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">404</h1>

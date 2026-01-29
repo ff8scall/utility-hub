@@ -6,7 +6,7 @@ import {
     Heart, Brain, Scroll, Gift, PenTool, Timer, CheckSquare, Lightbulb,
     Binary, FileCode, Edit, GitCompare, Barcode, Youtube, ImageIcon,
     Ruler, Weight, FileDigit, Key, Thermometer, Link, Trophy, MousePointer2, Crosshair, Target, Bomb, Disc, GitCommit,
-    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices, Utensils, Bird, Grid3X3, Layers, PawPrint
+    ArrowLeftRight, FileJson, Droplet, Gauge, Percent, Divide, Dices, Utensils, Bird, Grid3X3, Layers, PawPrint, Wind, User, Mic, Scale, Cookie, Eye, Circle, Ear, Music, BookOpen, HelpCircle, Radio, Smile, Battery, Smartphone, Briefcase, HelpingHand, MessageSquare, Mic2, Shield
 } from 'lucide-react';
 
 export const toolCategories = {
@@ -1004,5 +1004,365 @@ export const tools = [
         icon: PawPrint,
         color: 'bg-orange-500',
         keywords: ['펫mbti', '반려동물', '강아지mbti', '고양이mbti', 'petmbti']
+    },
+    {
+        id: 'mental-age',
+        title: '정신 연령 테스트',
+        description: '나는 잼민이일까, 꼰대일까? 나의 마음 나이 확인하기',
+        path: '/mental-age',
+        category: 'fun',
+        icon: Brain,
+        color: 'bg-indigo-500',
+        keywords: ['정신연령', '심리테스트', 'mentalage', '재미', '꼰대테스트']
+    },
+    {
+        id: 'brain-structure',
+        title: '나의 뇌 구조 분석',
+        description: '이름으로 보는 머릿속 생각 키워드 분석 리포트',
+        path: '/brain-structure',
+        category: 'fun',
+        icon: Brain,
+        color: 'bg-pink-500',
+        keywords: ['뇌구조', '머릿속', '생각분석', '이름테스트', 'brainstructure']
+    },
+    {
+        id: 'joseon-job',
+        title: '조선시대 직업 테스트',
+        description: '내가 조선시대에 태어났다면? 전생 신분 진단하기',
+        path: '/joseon-job',
+        category: 'fun',
+        icon: Scroll,
+        color: 'bg-orange-800',
+        keywords: ['조선시대', '전생테스트', '신분테스트', '이름테스트', 'joseonjob']
+    },
+    {
+        id: 'if-i-am-god',
+        title: "내가 '신'이라면?",
+        description: "나는 지름신? 잠의 신? 파괴의 신? 나의 숨겨진 신성 찾기",
+        path: '/if-i-am-god',
+        category: 'fun',
+        icon: Sparkles,
+        color: 'bg-indigo-900',
+        keywords: ['신테스트', '지름신', '이름테스트', '재미', 'ifiamgod']
+    },
+    {
+        id: 'first-impression-color',
+        title: '첫인상 컬러 테스트',
+        description: '나는 남들에게 어떤 색으로 보일까? 나의 아우라 컬러 확인하기',
+        path: '/first-impression-color',
+        category: 'fun',
+        icon: Palette,
+        color: 'bg-rose-500',
+        keywords: ['첫인상', '컬러테스트', '아우라', '이미지테스트', 'color']
+    },
+    {
+        id: 'animal-face',
+        title: '동물상 테스트',
+        description: '나는 강아지상? 고양이상? 인공지능이 아닌 심리 기반 관상 테스트',
+        path: '/animal-face',
+        category: 'fun',
+        icon: Dog,
+        color: 'bg-amber-500',
+        keywords: ['동물상', '강아지상', '고양이상', '여우상', '관상', 'animalface']
+    },
+    {
+        id: 'personal-scent',
+        title: '나만의 향기 테스트',
+        description: '나의 분위기에 찰떡인 향수는? 퍼스널 향기 찾기',
+        path: '/personal-scent',
+        category: 'fun',
+        icon: Wind,
+        color: 'bg-emerald-500',
+        keywords: ['향기', '향수', '퍼스널향기', '비누향', '우디향', 'personalscent']
+    },
+    {
+        id: 'ideal-type',
+        title: '이상형 찾기 테스트',
+        description: '내 마음속 진짜 이상형은? 연애 스타일로 알아보는 운명의 상대',
+        path: '/ideal-type',
+        category: 'fun',
+        icon: Heart,
+        color: 'bg-rose-500',
+        keywords: ['이상형', '연애', '운명', '심리테스트', 'idealtype', 'love']
+    },
+    {
+        id: 'couple-compatibility',
+        title: '커플 궁합 테스트',
+        description: '우리 둘의 이름으로 보는 사랑의 궁합 점수는? (이름 궁합)',
+        path: '/couple-compatibility',
+        category: 'fun',
+        icon: Heart,
+        color: 'bg-pink-500',
+        keywords: ['커플궁합', '이름궁합', '속궁합', '연애운', 'compatibility', 'love']
+    },
+    {
+        id: 'hidden-talent',
+        title: '숨겨진 재능 테스트',
+        description: '나도 모르는 나의 잠재력은? 숨겨진 재능과 적성 찾기 (심리테스트)',
+        path: '/hidden-talent',
+        category: 'fun',
+        icon: Lightbulb,
+        color: 'bg-indigo-600',
+        keywords: ['재능', '적성', '잠재력', '심리테스트', 'talent', 'potential']
+    },
+    {
+        id: 'balance-game',
+        title: '밸런스 게임',
+        description: '평생 라면만 먹기 vs 평생 탄산 끊기? 인생 최대 난제 밸런스 게임',
+        path: '/balance-game',
+        category: 'fun',
+        icon: Scale,
+        color: 'bg-indigo-500',
+        keywords: ['밸런스게임', 'vs', '선택', '만약에', 'balance', 'game']
+    },
+    {
+        id: 'fortune-cookie',
+        title: '포춘 쿠키',
+        description: '바삭! 쿠키 속에 숨겨진 오늘의 행운 메시지를 확인하세요',
+        path: '/fortune-cookie',
+        category: 'fun',
+        icon: Cookie,
+        color: 'bg-yellow-500',
+        keywords: ['포춘쿠키', '운세', '행운', '메시지', 'fortune', 'cookie']
+    },
+    {
+        id: 'color-sensitivity',
+        title: '색감 능력 테스트',
+        description: '당신의 눈은 매의 눈? 미세하게 다른 색깔을 찾아보세요 (색맹 테스트)',
+        path: '/color-sensitivity',
+        category: 'fun',
+        icon: Eye,
+        color: 'bg-indigo-600',
+        keywords: ['색감테스트', '색맹', '시력', '게임', 'color', 'test']
+    },
+    {
+        id: 'speed-math',
+        title: '암산 챌린지',
+        description: '제한 시간 내에 문제를 풀어라! 두뇌 회전 스피드 게임',
+        path: '/speed-math',
+        category: 'fun',
+        icon: Calculator,
+        color: 'bg-red-500',
+        keywords: ['암산', '수학', '게임', '두뇌회전', 'math', 'speed']
+    },
+    {
+        id: 'bubble-wrap',
+        title: '무한 뽁뽁이',
+        description: '톡! 톡! 멈출 수 없는 중독성, 무한 뽁뽁이로 스트레스 해소하기',
+        path: '/bubble-wrap',
+        category: 'fun',
+        icon: Circle,
+        color: 'bg-blue-400',
+        keywords: ['뽁뽁이', '스트레스', '피젯', '장난감', 'bubble', 'pop']
+    },
+    {
+        id: 'hearing-test',
+        title: '청력 나이 테스트',
+        description: '나는 몇 Hz까지 들릴까? 고주파로 측정하는 귀 나이 (모기소리 테스트)',
+        path: '/hearing-test',
+        category: 'health',
+        icon: Ear,
+        color: 'bg-rose-400',
+        keywords: ['청력', '귀나이', '고주파', '청력검사', 'hearing', 'age']
+    },
+    {
+        id: 'spelling-quiz',
+        title: '한국어 맞춤법 능력 고사',
+        description: '안되나요 vs 안돼나요? 헷갈리는 맞춤법 퀴즈로 국어 실력 테스트',
+        path: '/spelling-quiz',
+        category: 'fun',
+        icon: PenTool,
+        color: 'bg-indigo-500',
+        keywords: ['맞춤법', '국어', '한글', '퀴즈', 'spelling', 'korean']
+    },
+    {
+        id: 'time-sense',
+        title: '절대 시간 감각 테스트',
+        description: '눈 감고 10초 맞추기! 당신의 생체 시계는 얼마나 정확할까요?',
+        path: '/time-sense',
+        category: 'games',
+        icon: Timer,
+        color: 'bg-teal-500',
+        keywords: ['시간', '타이머', '10초', '감각', 'time', 'sense']
+    },
+    {
+        id: 'pitch-test',
+        title: '절대음감 테스트',
+        description: '도레미파솔라시도~ 들려주는 음을 맞추고 당신의 음감을 확인하세요',
+        path: '/pitch-test',
+        category: 'games',
+        icon: Music,
+        color: 'bg-indigo-600',
+        keywords: ['절대음감', '음감', '테스트', '음악', 'music', 'pitch']
+    },
+    {
+        id: 'capital-quiz',
+        title: '세계 수도 퀴즈',
+        description: '국기를 보고 이 나라의 수도를 맞춰보세요! 지리 상식 챌린지',
+        path: '/capital-quiz',
+        category: 'games',
+        icon: Globe,
+        color: 'bg-blue-600',
+        keywords: ['수도', '국기', '지리', '퀴즈', 'capital', 'flag']
+    },
+    {
+        id: 'typing-defense',
+        title: '타자 디펜스 게임',
+        description: '하늘에서 떨어지는 단어를 막아라! 추억의 산성비 게임',
+        path: '/typing-defense',
+        category: 'games',
+        icon: Keyboard,
+        color: 'bg-rose-500',
+        keywords: ['타자', '게임', '산성비', '베네치아', 'typing', 'defense']
+    },
+    {
+        id: 'vocabulary-test',
+        title: '어휘력/문해력 테스트',
+        description: '심심한 사과? 금일? 논란의 어휘력 총정리! 당신의 문해력은?',
+        path: '/vocabulary-test',
+        category: 'fun',
+        icon: BookOpen,
+        color: 'bg-green-600',
+        keywords: ['어휘력', '문해력', '사자성어', '국어', 'vocabulary', 'test']
+    },
+    {
+        id: 'dynamic-acuity',
+        title: '동체 시력 테스트',
+        description: '빠르게 지나가는 숫자를 잡아라! 당신의 동체 시력 레벨은?',
+        path: '/dynamic-acuity',
+        category: 'health',
+        icon: Eye,
+        color: 'bg-yellow-500',
+        keywords: ['동체시력', '시력', '순발력', '눈', 'visual', 'acuity']
+    },
+    {
+        id: 'hangman',
+        title: '행맨 게임',
+        description: '단어가 완성되기 전에 영단어를 맞춰보세요! 고전 추리 게임',
+        path: '/hangman',
+        category: 'games',
+        icon: HelpCircle,
+        color: 'bg-gray-600',
+        keywords: ['행맨', '영어', '단어', '추리', 'hangman', 'word']
+    },
+    {
+        id: 'morse-code',
+        title: '모스 부호 번역기',
+        description: '... --- ... 텍스트를 모스 부호로, 부호를 텍스트로 변환하고 소리로 들어보세요',
+        path: '/morse-code',
+        category: 'text',
+        icon: Radio,
+        color: 'bg-gray-800',
+        keywords: ['모스부호', '번역', '오디오', '신호', 'morse', 'code']
+    },
+    {
+        id: 'smile-dating-test',
+        title: '스마일 연애 테스트 (MBTI 연애 유형)',
+        description: '나의 연애 성향을 귀여운 스마일 캐릭터로 확인해보세요! MBTI 기반 소름돋는 연애 심리 테스트',
+        path: '/smile-dating-test',
+        category: 'fun',
+        icon: Smile,
+        color: 'bg-yellow-400',
+        keywords: ['연애테스트', '스마일연애', 'mbti연애', '심리테스트', 'dating', 'test']
+    },
+    {
+        id: 'dating-test',
+        title: '연애 능력 고사 (연애 모의고사)',
+        description: '당신의 연애 세포는 안녕한가요? 난감한 이별/썸 상황 대처 능력 평가',
+        path: '/dating-test',
+        category: 'fun',
+        icon: Heart,
+        color: 'bg-pink-500',
+        keywords: ['연애능력고사', '연애고사', '연애퀴즈', '썸', 'dating', 'quiz']
+    },
+    {
+        id: 'stress-test',
+        title: '번아웃 증후군 테스트 (직무 스트레스 자가진단)',
+        description: '혹시 나도 번아웃? 우울증과 만성 피로, 직장인 스트레스 수치 확인하기',
+        path: '/stress-test',
+        category: 'health',
+        icon: Battery,
+        color: 'bg-orange-500',
+        keywords: ['번아웃', '스트레스', '우울증', '자가진단', '직장인', 'burnout']
+    },
+    {
+        id: 'brain-type',
+        title: '좌뇌 우뇌 테스트 (두뇌 유형 진단)',
+        description: '깍지 끼기, 팔짱 끼기 등 신체 습관으로 알아보는 나의 두뇌 성향 분석',
+        path: '/brain-type',
+        category: 'fun',
+        icon: Brain,
+        color: 'bg-indigo-600',
+        keywords: ['좌뇌우뇌', '뇌구조', '심리테스트', '두뇌회전', 'brain', 'test']
+    },
+    {
+        id: 'eq-test',
+        title: 'EQ 공감 능력 테스트 (감정 지능 검사)',
+        description: '너 T야? 나의 공감 지수는 몇 점일까? 상황별 대처로 보는 감정 지능 측정',
+        path: '/eq-test',
+        category: 'fun',
+        icon: Heart,
+        color: 'bg-pink-500',
+        keywords: ['eq테스트', '공감능력', 't발c', 'mbti', 'emotional', 'test']
+    },
+    {
+        id: 'smartphone-addiction',
+        title: '스마트폰 중독 자가진단 (스몸비 테스트)',
+        description: '혹시 나도 디지털 치매? 스마트폰 의존도 체크리스트 및 해결 방안',
+        path: '/smartphone-addiction',
+        category: 'health',
+        icon: Smartphone,
+        color: 'bg-blue-500',
+        keywords: ['스마트폰중독', '스몸비', '디지털디톡스', '중독테스트', 'smartphone']
+    },
+    {
+        id: 'kkondae-test',
+        title: '꼰대 성향 테스트 (라떼는 말이야)',
+        description: '직장 내 꼰대력 측정! 나는 쿨한 선배일까 답답한 꼰대일까? 무료 자가진단',
+        path: '/kkondae-test',
+        category: 'fun',
+        icon: Briefcase,
+        color: 'bg-gray-700',
+        keywords: ['꼰대테스트', '라떼는', '직장인', '성향검사', 'kkondae', 'test']
+    },
+    {
+        id: 'hogu-test',
+        title: '호구 성향 테스트 (거절 못하는 성격)',
+        description: '부탁을 거절하기 힘든가요? 당신의 착한 아이 콤플렉스와 호구력을 진단합니다.',
+        path: '/hogu-test',
+        category: 'fun',
+        icon: HelpingHand,
+        color: 'bg-purple-500',
+        keywords: ['호구테스트', '거절', '착한아이', '심리테스트', 'pushover', 'hogu']
+    },
+    {
+        id: 'debate-test',
+        title: '깻잎 논쟁 테스트 (커플 밸런스 게임)',
+        description: '깻잎 떼주기, 패딩 지퍼 올려주기... 과몰입 유발 연애 논쟁 모음집',
+        path: '/debate-test',
+        category: 'fun',
+        icon: MessageSquare,
+        color: 'bg-green-500',
+        keywords: ['깻잎논쟁', '밸런스게임', '연애논쟁', '커플', 'debate', 'balance']
+    },
+    {
+        id: 'idol-test',
+        title: 'K-POP 아이돌 포지션 테스트 (데뷔 반)',
+        description: '내가 아이돌이라면? 메인보컬, 센터, 리더 등 나에게 딱 맞는 포지션 찾기',
+        path: '/idol-test',
+        category: 'fun',
+        icon: Mic2,
+        color: 'bg-indigo-500',
+        keywords: ['아이돌테스트', '포지션', 'kpop', '데뷔', 'idol', 'test']
+    },
+    {
+        id: 'resilience-test',
+        title: '회복 탄력성 테스트 (멘탈 강도 측정)',
+        description: '유리멘탈 vs 강철멘탈? 시련과 스트레스를 이겨내는 나의 마음 근육 점수는?',
+        path: '/resilience-test',
+        category: 'health',
+        icon: Shield,
+        color: 'bg-blue-600',
+        keywords: ['회복탄력성', '멘탈', '자존감', '심리테스트', 'resilience', 'mental']
     }
 ];
